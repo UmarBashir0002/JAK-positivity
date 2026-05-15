@@ -228,7 +228,8 @@ function Hero() {
             </motion.div>
           </div>
 
-          {/* Right – glassmorphism card */}
+          {/* Right – glassmorphism card  nuilf*/}
+          {/* build */}
           <motion.div initial={{ opacity: 0, x: 60, scale: 0.95 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
             className="hero-card-wrap">
             <div style={{
