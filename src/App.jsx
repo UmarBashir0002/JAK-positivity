@@ -45,14 +45,11 @@ function useReveal(threshold = 0.15) {
 }
 
 function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(`(max-width: ${breakpoint}px)`).matches || navigator.maxTouchPoints > 0;
-  });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
-    const onChange = () => setIsMobile(mq.matches || navigator.maxTouchPoints > 0);
+    const onChange = () => setIsMobile(mq.matches);
 
     onChange();
     mq.addEventListener?.("change", onChange);
@@ -67,33 +64,29 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
   const isMobile = useIsMobile();
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  useEffect(() => {
-    if (isMobile) {
+  const handleMove = (e) => {
+    if (isMobile || !ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const distanceX = e.clientX - centerX;
+    const distanceY = e.clientY - centerY;
+    const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+    if (distance < 140) {
+      setOffset({
+        x: distanceX * 0.14,
+        y: distanceY * 0.14,
+      });
+    } else {
       setOffset({ x: 0, y: 0 });
-      return;
     }
+  };
 
-    const handleMove = (e) => {
-      if (!ref.current) return;
-
-      const rect = ref.current.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const distanceX = e.clientX - centerX;
-      const distanceY = e.clientY - centerY;
-      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-
-      if (distance < 140) {
-        setOffset({
-          x: distanceX * 0.14,
-          y: distanceY * 0.14,
-        });
-      } else {
-        setOffset({ x: 0, y: 0 });
-      }
-    };
-
-    window.addEventListener("pointermove", handleMove, { passive: true });
+  useEffect(() => {
+    if (isMobile) return;
+    window.addEventListener("pointermove", handleMove);
     return () => window.removeEventListener("pointermove", handleMove);
   }, [isMobile]);
 
@@ -110,22 +103,15 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
           border: "1px solid rgba(255,255,255,0.14)",
         };
 
-  const Component = isMobile ? "button" : motion.button;
-  const motionProps = isMobile
-    ? {}
-    : {
-        whileHover: { scale: 1.03 },
-        whileTap: { scale: 0.98 },
-        animate: { x: offset.x, y: offset.y },
-        transition: { type: "spring", stiffness: 260, damping: 22 },
-      };
-
   return (
-    <Component
+    <motion.button
       ref={ref}
       type={type}
       onClick={onClick}
-      {...motionProps}
+      whileHover={isMobile ? undefined : { scale: 1.03 }}
+      whileTap={{ scale: 0.98 }}
+      animate={{ x: offset.x, y: offset.y }}
+      transition={{ type: "spring", stiffness: 260, damping: 22 }}
       style={{
         ...baseStyle,
         borderRadius: 14,
@@ -136,7 +122,6 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
         cursor: "pointer",
         display: "inline-flex",
         alignItems: "center",
-        justifyContent: "center",
         gap: 10,
         letterSpacing: "0.02em",
         border: "none",
@@ -145,13 +130,12 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
         userSelect: "none",
         position: "relative",
         zIndex: 2,
-        willChange: isMobile ? "auto" : "transform",
-        transform: isMobile ? "none" : undefined,
+        willChange: "transform",
         ...style,
       }}
     >
       {children}
-    </Component>
+    </motion.button>
   );
 }
 
@@ -368,7 +352,6 @@ function Hero() {
           opacity,
           position: "relative",
           zIndex: 20,
-          pointerEvents: "auto",
           padding: "130px 5vw 80px",
           maxWidth: 1280,
           margin: "0 auto",
@@ -1139,7 +1122,6 @@ export default function App() {
         select option { background: ${C.obsidian}; color: ${C.white}; }
         button, a, input, textarea, select {
           -webkit-tap-highlight-color: transparent;
-          touch-action: manipulation;
         }
         @media (max-width: 768px) {
           .nav-mobile { display: block !important; }
