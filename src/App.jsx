@@ -19,7 +19,7 @@ const C = {
   bgCard: "#0B1020",         // Layered charcoal background
   glassBase: "rgba(11, 16, 32, 0.45)",
   glassHover: "rgba(17, 24, 39, 0.75)",
-  
+
   // Luxury Strategic Accents
   indigo: "#4F46E5",
   purple: "#7C3AED",
@@ -27,13 +27,13 @@ const C = {
   teal: "#14B8A6",
   violetGlow: "#8B5CF6",
   skyGlow: "#38BDF8",
-  
+
   // Cinematic Typography Engine
   white: "#FFFFFF",
   silver: "#E5E7EB",         // Sharp silver tint for headings & structure
   grayText: "#9CA3AF",       // Highly readable soft gray for copy
   muted: "#6B7280",          // Structural architectural text
-  
+
   borderGlass: "rgba(255, 255, 255, 0.06)",
   borderGlow: "rgba(79, 70, 229, 0.25)"
 };
@@ -195,16 +195,16 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
   const baseStyle =
     variant === "primary"
       ? {
-          background: `linear-gradient(135deg, ${C.indigo}, ${C.purple})`,
-          color: C.white,
-          boxShadow: `0 12px 35px rgba(124, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.2)`,
-        }
+        background: `linear-gradient(135deg, ${C.indigo}, ${C.purple})`,
+        color: C.white,
+        boxShadow: `0 12px 35px rgba(124, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.2)`,
+      }
       : {
-          background: "rgba(255, 255, 255, 0.03)",
-          color: C.white,
-          border: `1px solid ${C.borderGlass}`,
-          backdropFilter: "blur(12px)",
-        };
+        background: "rgba(255, 255, 255, 0.03)",
+        color: C.white,
+        border: `1px solid ${C.borderGlass}`,
+        backdropFilter: "blur(12px)",
+      };
 
   return (
     <motion.button
@@ -250,7 +250,7 @@ function Nav() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const links = ["Home", "Services", "About", "Results", "Contact"];
+  const links = ["Home",  "About","Services", "Results", "Contact"];
   const scroll = (id) => {
     setOpen(false);
     const element = document.getElementById(id.toLowerCase());
@@ -368,14 +368,42 @@ function Hero() {
               </div>
             </motion.div>
 
-            <motion.h1 initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }} style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(44px, 5.2vw, 74px)", fontWeight: 700, color: C.white, lineHeight: 1.1, margin: "0 0 26px", letterSpacing: "-0.02em" }}>
-              Commercial Dominance{" "}
-              <span style={{ backgroundImage: `linear-gradient(135deg, ${C.skyGlow}, ${C.purple})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontStyle: "italic" }}>Without Risks.</span>
+            <motion.h1
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: "clamp(38px, 4.8vw, 68px)",
+                fontWeight: 500,
+                color: C.white,
+                lineHeight: 1.15,
+                margin: "0 0 26px",
+                letterSpacing: "-0.02em"
+              }}
+            >
+              International Business Development & Management
+
+              {/* Subheading Row: Forced to one line, smaller scale, custom styled brown & green */}
+              <span style={{
+                display: "block",
+                fontSize: "clamp(20px, 2.4vw, 32px)",
+                marginTop: "16px",
+                whiteSpace: "nowrap",
+                fontWeight: 600,
+                letterSpacing: "0em"
+              }}>
+                <span style={{ color: "#C89666", fontStyle: "italic" }}>Brownfield</span>
+                <span style={{ color: C.grayText, fontStyle: "normal", fontWeight: 400 }}> & </span>
+                <span style={{ color: "#34D399", fontStyle: "italic" }}>Greenfield.</span>
+              </span>
             </motion.h1>
 
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, color: C.grayText, lineHeight: 1.8, margin: "0 0 44px", maxWidth: 580 }}>
-              JCK Positivity engineers premier market expansion pathways and cross-border distribution models. We minimize operational complexities to securely convert regional scaling ambitions into sustained market capture.
-            </motion.p>
+              JCK Positivity strengthens existing businesses while helping build new
+              ventures through strategic brownfield and greenfield development.
+              We enable sustainable expansion, operational excellence, and long-term
+              commercial growth across international and regional markets.            </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.45 }} style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
               <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
@@ -509,8 +537,8 @@ function About() {
           <motion.div ref={ref} initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8 }}>
             <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.purple, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 22, padding: "6px 20px", background: "rgba(124, 58, 237, 0.08)", border: `1px solid rgba(124, 58, 237, 0.15)`, borderRadius: 100 }}>Corporate Charter</div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 700, color: C.white, lineHeight: 1.15, margin: "0 0 28px" }}>
-              Strategic Operational Management &<br />
-              <span style={{ backgroundImage: `linear-gradient(135deg, ${C.cyan}, ${C.purple})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontStyle: "italic" }}>Domestic-Global Execution.</span>
+              Global Route to Market<br />
+              <span style={{ backgroundImage: `linear-gradient(135deg, ${C.cyan}, ${C.purple})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontStyle: "italic" }}>& International Business Management</span>
             </h2>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: C.silver, lineHeight: 1.85, marginBottom: 36, textAlign: "justify" }}>
               jck Positivity partners with businesses to drive sustainable growth across global and domestic markets. Our expertise spans market entry, route-to-market strategy, distribution design, trade and product compliance, packaging solutions, and commercial execution. We help companies navigate the complexities of international markets by identifying the right opportunities, developing the right product portfolio, and connecting them with suitable strategic partners and distribution networks across diverse regions. With experience across multiple industries and geographies, we enable businesses to expand confidently while minimising risk and maximising commercial potential. Beyond business development, we provide strategic and operational management support, including P&L oversight, performance improvement, brownfield expansion, and end-to-end business optimisation. We work alongside organisations not only to unlock new opportunities, but to strengthen and manage the businesses behind them.
@@ -624,7 +652,7 @@ function Contact() {
       setForm({ name: "", email: "", service: "", message: "" });
     } catch (err) {
       if (EMAILJS_CONFIG.serviceId === "YOUR_SERVICE_ID") {
-        setErrorMsg("System node credentials unconfigured. Map valid credentials into the top config block.");
+        setErrorMsg("Email not configured Yet");
       } else {
         setErrorMsg("Transmission interruption. Please restart routing execution loop.");
       }
@@ -642,7 +670,7 @@ function Contact() {
       <div style={{ maxWidth: 1150, margin: "0 auto", position: "relative", zIndex: 10 }}>
         <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: 80 }}>
           <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 18, padding: "6px 20px", background: "rgba(56, 189, 248, 0.08)", border: `1px solid rgba(56, 189, 248, 0.15)`, borderRadius: 100 }}>Secure Channel</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 54px)", fontWeight: 700, color: C.white, margin: 0 }}>Initiate Connection Protocol</h2>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 54px)", fontWeight: 700, color: C.white, margin: 0 }}>Initiate Connection </h2>
         </motion.div>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 64 }} className="contact-grid">
@@ -677,17 +705,17 @@ function Contact() {
                 <form onSubmit={handleSubmit} noValidate>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }} className="form-grid">
                     <div>
-                      <label style={labelStyle}>Identity Token *</label>
+                      <label style={labelStyle}>Name *</label>
                       <input name="name" required value={form.name} onChange={handleChange} placeholder="Jane Smith" style={inputStyle} />
                     </div>
                     <div>
-                      <label style={labelStyle}>Secure Routing Email *</label>
+                      <label style={labelStyle}>  Email *</label>
                       <input name="email" type="email" required value={form.email} onChange={handleChange} placeholder="jane@corporation.com" style={inputStyle} />
                     </div>
                   </div>
 
                   <div style={{ marginBottom: 20 }}>
-                    <label style={labelStyle}>Target Capability Protocol *</label>
+                    <label style={labelStyle}>Service *</label>
                     <select name="service" required value={form.service} onChange={handleChange} style={inputStyle}>
                       <option value="" disabled>Select capability matrix pipeline...</option>
                       {SERVICES.map(s => <option key={s.title} value={s.title} style={{ background: C.bgCard }}>{s.title}</option>)}
@@ -695,7 +723,7 @@ function Contact() {
                   </div>
 
                   <div style={{ marginBottom: 32 }}>
-                    <label style={labelStyle}>Macro Execution Objective *</label>
+                    <label style={labelStyle}>Objective *</label>
                     <textarea name="message" required rows={5} value={form.message} onChange={handleChange} placeholder="Define your domestic/global scaling goals, industry constraints, or operational bottlenecks..." style={{ ...inputStyle, resize: "none" }} />
                   </div>
 
@@ -759,8 +787,8 @@ export default function App() {
       `}</style>
       <Nav />
       <Hero />
-      <Services />
       <About />
+      <Services />
       <Results />
       <Contact />
       <Footer />
