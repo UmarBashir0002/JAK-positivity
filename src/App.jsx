@@ -3,70 +3,175 @@ import { motion, useInView, useScroll, useTransform, AnimatePresence } from "fra
 import {
   Globe, TrendingUp, ShieldCheck, Network, ChevronDown, Mail,
   Phone, MapPin, ArrowRight, Menu, X, Star, Users, Briefcase,
-  Award, CheckCircle, Send, Linkedin, Twitter, Facebook
+  Award, CheckCircle, Send, Shield, Zap, Target, Layers
 } from "lucide-react";
 
-/* ─── EMAILJS CONFIG ─────────────────────────────────────────────────────────
-   Replace these with your actual EmailJS credentials:
-   1. Go to https://www.emailjs.com and create a free account
-   2. Create an Email Service (Gmail, Outlook, etc.)
-   3. Create an Email Template with variables: {{from_name}}, {{from_email}}, {{service}}, {{message}}
-   4. Copy your Service ID, Template ID, and Public Key below
-   ─────────────────────────────────────────────────────────────────────────── */
+/* ─── EMAILJS CONFIGURATION ────────────────────────────────────────────────── */
 const EMAILJS_CONFIG = {
   serviceId: "YOUR_SERVICE_ID",
   templateId: "YOUR_TEMPLATE_ID",
   publicKey: "YOUR_PUBLIC_KEY",
 };
 
-/* ─── COLOUR TOKENS ──────────────────────────────────────────────────────── */
+/* ─── PREMIUM SYSTEM COLOURED TOKENS ───────────────────────────────────────── */
 const C = {
-  obsidian: "#050A14",
-  charcoal: "#0B101A",
-  slate: "#172033",
-  slateLight: "#22304A",
-  gold: "#B8860B",
-  goldLight: "#FFD700",
+  bgDeep: "#060816",         // Deep midnight navy canvas
+  bgCard: "#0B1020",         // Layered charcoal background
+  glassBase: "rgba(11, 16, 32, 0.45)",
+  glassHover: "rgba(17, 24, 39, 0.75)",
+  
+  // Luxury Strategic Accents
+  indigo: "#4F46E5",
+  purple: "#7C3AED",
+  cyan: "#06B6D4",
+  teal: "#14B8A6",
+  violetGlow: "#8B5CF6",
+  skyGlow: "#38BDF8",
+  
+  // Cinematic Typography Engine
   white: "#FFFFFF",
-  offWhite: "#F7F4EE",
-  text: "#0B101A",
-  muted: "#667085",
-  border: "rgba(255,215,0,0.18)",
+  silver: "#E5E7EB",         // Sharp silver tint for headings & structure
+  grayText: "#9CA3AF",       // Highly readable soft gray for copy
+  muted: "#6B7280",          // Structural architectural text
+  
+  borderGlass: "rgba(255, 255, 255, 0.06)",
+  borderGlow: "rgba(79, 70, 229, 0.25)"
 };
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1800&q=80";
+  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1800&q=80";
 
-/* ─── HOOKS ───────────────────────────────────────────────────────────────── */
-function useReveal(threshold = 0.15) {
+/* ─── DATA ENGINE: REPLACED WITH STRATEGIC DOCUMENT MATRICES ──────────────── */
+const SERVICES = [
+  {
+    icon: Globe,
+    title: "International Business Development & Market Expansion",
+    desc: "Navigate the complexities of global scaling confidently. We map targets, uncover market entry white spaces, and isolate execution risks.",
+    points: [
+      "Market entry strategy and expansion planning",
+      "Market feasibility and opportunity assessment",
+      "Competitive positioning and market intelligence",
+      "Product portfolio optimisation for target markets",
+      "Identification and activation of market white spaces",
+      "Go-to-market strategy and execution support",
+      "Regulatory and compliance mapping",
+      "Distributor and channel partner selection",
+      "Global exhibitions and trade show participation"
+    ],
+    accent: C.cyan
+  },
+  {
+    icon: TrendingUp,
+    title: "Business Turnaround, P&L Optimization & Reorganisation",
+    desc: "Strengthen and manage the core operational engines. We institute absolute financial discipline, performance diagnostics, and margin recovery paths.",
+    points: [
+      "Business diagnostics and performance assessment",
+      "Brownfield restructuring and operational cleanup",
+      "P&L optimisation and financial discipline setup",
+      "Cost and margin improvement strategies",
+      "KPI and OKR framework implementation",
+      "Business reorganisation and scaling readiness"
+    ],
+    accent: C.purple
+  },
+  {
+    icon: Layers,
+    title: "Greenfield Project Development & New Venture Creation",
+    desc: "Translate venture architecture blueprints into highly stable, validated, and operational commercial realities with long-range planning accuracy.",
+    points: [
+      "Greenfield project development",
+      "Business feasibility and validation",
+      "Operating model and business planning",
+      "Entity setup and operational launch",
+      "Early-stage go-to-market execution",
+      "3–5 year strategic growth planning",
+      "Portfolio and expansion strategy"
+    ],
+    accent: C.teal
+  },
+  {
+    icon: Network,
+    title: "JV, Distribution & Investment Partnering",
+    desc: "Secure market-making institutional alliances, distribution channels, investor matchmaking, and robust cross-border capital pipelines.",
+    points: [
+      "Joint venture structuring and strategic alliances",
+      "Distributor and channel partner development",
+      "Partner matchmaking and negotiation support",
+      "Investor sourcing and capital facilitation",
+      "Pitch deck and investment positioning",
+      "Due diligence and deal support",
+      "Roadshow and investor engagement planning",
+      "Distribution ecosystem development"
+    ],
+    accent: C.indigo
+  }
+];
+
+const TESTIMONIALS = [
+  { name: "Amara Nwosu", role: "CEO, NovaTech Africa", text: "JCK Positivity executed our tri-regional expansion script flawlessly within 11 months. Their network assets are unprecedented.", signature: "NW" },
+  { name: "David Chen", role: "MD, AsiaLink Corp", text: "Exceptional quantitative risk insulation frameworks. They corrected critical legal positioning vectors ahead of market entry.", signature: "DC" },
+  { name: "Sophie Laurent", role: "Founder, Maison Lumière", text: "They operate like an ultra-luxury tactical unit rather than a consulting vendor. Our Middle East alpha capture loop has yielded unprecedented scale.", signature: "SL" }
+];
+
+/* ─── HOOKS & UTILITIES ───────────────────────────────────────────────────── */
+function useReveal(threshold = 0.1) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: threshold });
   return [ref, inView];
 }
 
-function useIsMobile(breakpoint = 768) {
+function useIsMobile(breakpoint = 992) {
   const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${breakpoint}px)`);
     const onChange = () => setIsMobile(mq.matches);
-
     onChange();
     mq.addEventListener?.("change", onChange);
     return () => mq.removeEventListener?.("change", onChange);
   }, [breakpoint]);
-
   return isMobile;
 }
 
+/* ─── CINEMATIC GLOWING LIGHT ORBS ────────────────────────────────────────── */
+function GlowOrb({ delay = 0, size = 400, color = C.purple, left = "10%", top = "20%" }) {
+  return (
+    <motion.div
+      animate={{
+        x: [0, 50, -30, 0],
+        y: [0, -60, 40, 0],
+        scale: [1, 1.15, 0.9, 1],
+      }}
+      transition={{
+        duration: 14,
+        repeat: Infinity,
+        delay,
+        ease: "easeInOut",
+      }}
+      style={{
+        position: "absolute",
+        left,
+        top,
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+        opacity: 0.2,
+        filter: "blur(70px)",
+        pointerEvents: "none",
+        zIndex: 1,
+      }}
+    />
+  );
+}
+
+/* ─── INTERACTIVE KINETIC MAGNETIC BUTTON ─────────────────────────────────── */
 function MagneticButton({ children, onClick, variant = "primary", style = {}, type = "button" }) {
   const ref = useRef(null);
-  const isMobile = useIsMobile();
+  const isMobile = useIsMobile(768);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const handleMove = (e) => {
     if (isMobile || !ref.current) return;
-
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -74,11 +179,8 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
     const distanceY = e.clientY - centerY;
     const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
-    if (distance < 140) {
-      setOffset({
-        x: distanceX * 0.14,
-        y: distanceY * 0.14,
-      });
+    if (distance < 130) {
+      setOffset({ x: distanceX * 0.15, y: distanceY * 0.15 });
     } else {
       setOffset({ x: 0, y: 0 });
     }
@@ -93,14 +195,15 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
   const baseStyle =
     variant === "primary"
       ? {
-          background: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`,
-          color: C.obsidian,
-          boxShadow: "0 16px 40px rgba(184,134,11,0.22)",
+          background: `linear-gradient(135deg, ${C.indigo}, ${C.purple})`,
+          color: C.white,
+          boxShadow: `0 12px 35px rgba(124, 92, 246, 0.35), inset 0 1px 0 rgba(255,255,255,0.2)`,
         }
       : {
-          background: "rgba(255,255,255,0.04)",
+          background: "rgba(255, 255, 255, 0.03)",
           color: C.white,
-          border: "1px solid rgba(255,255,255,0.14)",
+          border: `1px solid ${C.borderGlass}`,
+          backdropFilter: "blur(12px)",
         };
 
   return (
@@ -108,26 +211,23 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
       ref={ref}
       type={type}
       onClick={onClick}
-      whileHover={isMobile ? undefined : { scale: 1.03 }}
+      whileHover={{ scale: 1.02, boxShadow: variant === "primary" ? `0 16px 40px rgba(124, 92, 246, 0.5)` : `0 10px 25px rgba(56, 189, 248, 0.15)` }}
       whileTap={{ scale: 0.98 }}
       animate={{ x: offset.x, y: offset.y }}
-      transition={{ type: "spring", stiffness: 260, damping: 22 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
       style={{
         ...baseStyle,
         borderRadius: 14,
-        padding: "15px 30px",
+        padding: "16px 34px",
         fontFamily: "'DM Sans', sans-serif",
-        fontWeight: 700,
+        fontWeight: 600,
         fontSize: 15,
         cursor: "pointer",
         display: "inline-flex",
         alignItems: "center",
-        gap: 10,
-        letterSpacing: "0.02em",
-        border: "none",
-        touchAction: "manipulation",
-        WebkitTapHighlightColor: "transparent",
-        userSelect: "none",
+        gap: 12,
+        letterSpacing: "0.01em",
+        border: variant === "primary" ? "none" : `1px solid ${C.borderGlass}`,
         position: "relative",
         zIndex: 2,
         willChange: "transform",
@@ -139,7 +239,7 @@ function MagneticButton({ children, onClick, variant = "primary", style = {}, ty
   );
 }
 
-/* ─── STICKY NAV ──────────────────────────────────────────────────────────── */
+/* ─── NAVIGATION DISPATCH PROTOCOL ────────────────────────────────────────── */
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -154,9 +254,7 @@ function Nav() {
   const scroll = (id) => {
     setOpen(false);
     const element = document.getElementById(id.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -170,30 +268,31 @@ function Nav() {
         left: 0,
         right: 0,
         zIndex: 120,
-        background: scrolled ? "rgba(5,10,20,0.88)" : "transparent",
-        backdropFilter: scrolled ? "blur(22px)" : "none",
-        borderBottom: scrolled ? `1px solid ${C.border}` : "none",
+        background: scrolled ? "rgba(6, 8, 22, 0.8)" : "transparent",
+        backdropFilter: scrolled ? "blur(24px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
+        borderBottom: scrolled ? `1px solid ${C.borderGlass}` : "none",
         transition: "background 0.4s, border 0.4s, backdrop-filter 0.4s",
         padding: "0 5vw",
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 76 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", zIndex: 2 }} onClick={() => scroll("home")}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 85 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer", zIndex: 2 }} onClick={() => scroll("home")}>
           <div style={{
-            width: 40, height: 40, borderRadius: 10,
-            background: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`,
+            width: 44, height: 44, borderRadius: 12,
+            background: `linear-gradient(135deg, ${C.cyan}, ${C.indigo})`,
             display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 10px 24px rgba(184,134,11,0.25)"
+            boxShadow: `0 8px 24px rgba(6, 182, 212, 0.3)`
           }}>
-            <Globe size={20} color={C.obsidian} strokeWidth={2.2} />
+            <Globe size={22} color={C.white} />
           </div>
           <div>
-            <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, fontSize: 17, color: C.white, letterSpacing: "0.01em", lineHeight: 1 }}>JAK</div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: C.goldLight, letterSpacing: "0.18em", textTransform: "uppercase", lineHeight: 1, marginTop: 2 }}>Positivity</div>
+            <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, fontSize: 21, color: C.white, letterSpacing: "0.02em", lineHeight: 1 }}>JCK</div>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: C.skyGlow, letterSpacing: "0.22em", textTransform: "uppercase", lineHeight: 1, marginTop: 5 }}>Positivity</div>
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: 34, alignItems: "center" }} className="nav-desktop">
+        <div style={{ display: "flex", gap: 40, alignItems: "center" }} className="nav-desktop">
           {links.map((l) => (
             <button
               key={l}
@@ -204,483 +303,177 @@ function Nav() {
                 cursor: "pointer",
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 14,
-                color: "rgba(255,255,255,0.82)",
-                letterSpacing: "0.04em",
-                padding: 0,
+                color: C.grayText,
+                letterSpacing: "0.03em",
+                fontWeight: 500,
                 transition: "color 0.2s",
-                touchAction: "manipulation",
-                WebkitTapHighlightColor: "transparent",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = C.goldLight)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.82)")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = C.skyGlow)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.grayText)}
             >
               {l}
             </button>
           ))}
-          <MagneticButton onClick={() => scroll("contact")} variant="primary" style={{ padding: "10px 20px", fontSize: 13 }}>
-            Book a Call
+          <MagneticButton onClick={() => scroll("contact")} variant="primary" style={{ padding: "10px 24px", fontSize: 13 }}>
+            Book Alpha Meeting
           </MagneticButton>
         </div>
 
-        <button
-          onClick={() => setOpen(!open)}
-          style={{
-            display: "none",
-            background: "none",
-            border: "none",
-            color: C.white,
-            cursor: "pointer",
-            touchAction: "manipulation",
-            WebkitTapHighlightColor: "transparent",
-          }}
-          className="nav-mobile"
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
+        <button onClick={() => setOpen(!open)} style={{ display: "none", background: "none", border: "none", color: C.white, cursor: "pointer" }} className="nav-mobile">
+          {open ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            style={{
-              background: "rgba(5,10,20,0.98)",
-              borderTop: `1px solid ${C.border}`,
-              padding: "16px 5vw 24px",
-            }}
-          >
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ background: "rgba(6, 8, 22, 0.98)", borderTop: `1px solid ${C.borderGlass}`, padding: "16px 5vw 32px" }}>
             {links.map((l) => (
-              <button
-                key={l}
-                onClick={() => scroll(l)}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "left",
-                  background: "none",
-                  border: "none",
-                  padding: "14px 0",
-                  color: "rgba(255,255,255,0.82)",
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 16,
-                  borderBottom: `1px solid ${C.border}`,
-                  cursor: "pointer",
-                  touchAction: "manipulation",
-                  WebkitTapHighlightColor: "transparent",
-                }}
-              >
+              <button key={l} onClick={() => scroll(l)} style={{ display: "block", width: "100%", textAlign: "left", background: "none", border: "none", padding: "16px 0", color: C.silver, fontFamily: "'DM Sans', sans-serif", fontSize: 16, borderBottom: `1px solid ${C.borderGlass}` }}>
                 {l}
               </button>
             ))}
-            <MagneticButton onClick={() => scroll("contact")} variant="primary" style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
-              Book a Call
+            <MagneticButton onClick={() => scroll("contact")} variant="primary" style={{ marginTop: 24, width: "100%", justifyContent: "center" }}>
+              Book Alpha Meeting
             </MagneticButton>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .nav-desktop { display: none !important; }
-          .nav-mobile { display: block !important; }
-        }
-      `}</style>
+      <style>{`@media (max-width: 992px) { .nav-desktop { display: none !important; } .nav-mobile { display: block !important; } }`}</style>
     </motion.nav>
   );
 }
 
-/* ─── HERO ────────────────────────────────────────────────────────────────── */
+/* ─── HERO PARALLAX MATRIX ────────────────────────────────────────────────── */
 function Hero() {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 700], [0, 120]);
-  const overlayY = useTransform(scrollY, [0, 700], [0, 60]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0.92]);
+  const y = useTransform(scrollY, [0, 800], [0, 180]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   return (
-    <section
-      id="home"
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        overflow: "hidden",
-        background: C.obsidian,
-      }}
-    >
-      <motion.div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(135deg, rgba(5,10,20,0.90), rgba(5,10,20,0.64)),
-            url("${HERO_IMAGE}")
-          `,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          y,
-          pointerEvents: "none",
-        }}
-      />
+    <section id="home" style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden", background: C.bgDeep }}>
+      <GlowOrb color={C.purple} size={550} left="-5%" top="10%" delay={0} />
+      <GlowOrb color={C.cyan} size={500} left="65%" top="35%" delay={3} />
 
-      <motion.div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "radial-gradient(circle at top right, rgba(255,215,0,0.12), transparent 28%), radial-gradient(circle at bottom left, rgba(184,134,11,0.16), transparent 32%)",
-          y: overlayY,
-          pointerEvents: "none",
-        }}
-      />
+      <motion.div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(180deg, rgba(6,8,22,0.85) 0%, ${C.bgDeep} 100%), url("${HERO_IMAGE}")`, backgroundSize: "cover", backgroundPosition: "center", y, pointerEvents: "none" }} />
 
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-          maskImage: "radial-gradient(ellipse at center, black 30%, transparent 85%)",
-          pointerEvents: "none",
-          opacity: 0.28,
-        }}
-      />
+      <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)`, backgroundSize: "60px 60px", maskImage: "radial-gradient(ellipse at center, black 40%, transparent 90%)", WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 90%)", opacity: 0.4, pointerEvents: "none" }} />
 
-      <motion.div
-        style={{
-          opacity,
-          position: "relative",
-          zIndex: 20,
-          padding: "130px 5vw 80px",
-          maxWidth: 1280,
-          margin: "0 auto",
-          width: "100%",
-        }}
-      >
-        <div style={{ display: "grid", gridTemplateColumns: "1.06fr 0.94fr", gap: 64, alignItems: "center" }} className="hero-grid-layout">
+      <motion.div style={{ opacity, position: "relative", zIndex: 20, padding: "150px 5vw 80px", maxWidth: 1280, margin: "0 auto", width: "100%" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 64, alignItems: "center" }} className="hero-grid-layout">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 110, damping: 18, delay: 0.12 }}
-            >
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                background: "rgba(255,215,0,0.08)",
-                border: `1px solid rgba(255,215,0,0.22)`,
-                borderRadius: 100,
-                padding: "6px 16px",
-                marginBottom: 28,
-                boxShadow: "inset 0 0 18px rgba(255,215,0,0.06)",
-              }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.goldLight }} />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: C.goldLight, letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                  International Business Development
-                </span>
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(79, 70, 229, 0.12)", border: `1px solid ${C.borderGlow}`, borderRadius: 100, padding: "6px 20px", marginBottom: 30 }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.cyan, boxShadow: `0 0 10px ${C.cyan}` }} />
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600 }}>Global Business Transformation</span>
               </div>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 34 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 90, damping: 16, delay: 0.24 }}
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: "clamp(40px, 5.2vw, 72px)",
-                fontWeight: 700,
-                color: C.white,
-                lineHeight: 1.05,
-                margin: "0 0 24px",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Expand Your Business{" "}
-              <span style={{ color: C.goldLight, fontStyle: "italic" }}>Across Borders.</span>
+            <motion.h1 initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.15 }} style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(44px, 5.2vw, 74px)", fontWeight: 700, color: C.white, lineHeight: 1.1, margin: "0 0 26px", letterSpacing: "-0.02em" }}>
+              Commercial Dominance{" "}
+              <span style={{ backgroundImage: `linear-gradient(135deg, ${C.skyGlow}, ${C.purple})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontStyle: "italic" }}>Without Risks.</span>
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 95, damping: 18, delay: 0.34 }}
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 18,
-                color: "rgba(255,255,255,0.72)",
-                lineHeight: 1.78,
-                margin: "0 0 38px",
-                maxWidth: 540,
-                letterSpacing: "0.01em",
-              }}
-            >
-              JAK Positivity is your strategic partner in navigating global markets — from market entry to trade compliance, we turn your international ambitions into measurable results.
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, color: C.grayText, lineHeight: 1.8, margin: "0 0 44px", maxWidth: 580 }}>
+              JCK Positivity engineers premier market expansion pathways and cross-border distribution models. We minimize operational complexities to securely convert regional scaling ambitions into sustained market capture.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 110, damping: 18, delay: 0.44 }}
-              style={{ display: "flex", gap: 16, flexWrap: "wrap" }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.45 }} style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
               <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
-                Book a Free Consultation <ArrowRight size={16} />
+                Initiate Expansion <ArrowRight size={16} />
               </MagneticButton>
-              <MagneticButton
-                onClick={() => document.getElementById("services").scrollIntoView({ behavior: "smooth" })}
-                variant="secondary"
-              >
-                Explore Services
+              <MagneticButton onClick={() => document.getElementById("services").scrollIntoView({ behavior: "smooth" })} variant="secondary">
+                Explore Matrix Pillars
               </MagneticButton>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 100, damping: 18, delay: 0.56 }}
-              style={{ display: "flex", gap: 40, marginTop: 56, flexWrap: "wrap" }}
-            >
-              {[
-                ["120+", "Global Clients"],
-                ["35", "Countries Reached"],
-                ["98%", "Client Satisfaction"],
-              ].map(([val, label]) => (
-                <div key={label}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 32, fontWeight: 700, color: C.goldLight }}>{val}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.52)", marginTop: 4, letterSpacing: "0.04em" }}>{label}</div>
-                </div>
-              ))}
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 60, scale: 0.96 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ type: "spring", stiffness: 88, damping: 17, delay: 0.25 }}
-            className="hero-card-wrap"
-          >
-            <div style={{
-              background: "rgba(255,255,255,0.06)",
-              backdropFilter: "blur(30px)",
-              WebkitBackdropFilter: "blur(30px)",
-              border: "1px solid rgba(255,215,0,0.14)",
-              borderRadius: 26,
-              padding: 40,
-              position: "relative",
-              overflow: "hidden",
-              boxShadow: "0 24px 70px rgba(0,0,0,0.24)",
-            }}>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(255,215,0,0.06), transparent 35%, rgba(255,255,255,0.04))", pointerEvents: "none" }} />
-              <div style={{ position: "absolute", top: 0, left: 42, right: 42, height: 1, background: `linear-gradient(90deg, transparent, ${C.goldLight}, transparent)` }} />
-
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.goldLight, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 20 }}>
-                Global Reach Dashboard
+          {/* FUTURISTIC GLASS QUANT DASHBOARD */}
+          <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.35 }} className="hero-card-wrap">
+            <div style={{ background: C.glassBase, backdropFilter: "blur(30px)", WebkitBackdropFilter: "blur(30px)", border: `1px solid ${C.borderGlass}`, borderRadius: 28, padding: 42, boxShadow: "0 35px 75px rgba(0,0,0,0.55), inset 0 1px 1px rgba(255,255,255,0.04)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 28, alignItems: "center" }}>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.15em", textTransform: "uppercase" }}>Strategic Velocity Metrics</span>
+                <div style={{ display: "flex", gap: 6 }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.2)" }} /><div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal }} /></div>
               </div>
 
-              <div style={{ position: "relative", background: "rgba(255,255,255,0.03)", borderRadius: 18, padding: 24, marginBottom: 24, minHeight: 180 }}>
-                <svg viewBox="0 0 340 160" style={{ width: "100%", opacity: 0.9 }}>
-                  <ellipse cx="170" cy="80" rx="155" ry="70" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
-                  {[
-                    [60, 60], [120, 45], [200, 55], [265, 70], [310, 90],
-                    [270, 115], [190, 110], [130, 105], [80, 100], [45, 85]
-                  ].map(([x, y], i) => (
-                    <g key={i}>
-                      <circle cx={x} cy={y} r={3} fill={C.goldLight} opacity={0.7} />
-                      <circle cx={x} cy={y} r={7} fill="none" stroke={C.goldLight} strokeWidth="0.6" opacity={0.28} />
-                    </g>
-                  ))}
-                  {[[60, 60, 200, 55], [200, 55, 310, 90], [120, 45, 265, 70], [80, 100, 190, 110]].map(([x1, y1, x2, y2], i) => (
-                    <path
-                      key={i}
-                      d={`M${x1},${y1} Q${(x1 + x2) / 2},${Math.min(y1, y2) - 30} ${x2},${y2}`}
-                      fill="none"
-                      stroke={C.goldLight}
-                      strokeWidth="0.8"
-                      strokeDasharray="3 4"
-                      opacity={0.42}
-                    />
-                  ))}
-                  <motion.circle
-                    cx="170"
-                    cy="80"
-                    r="10"
-                    fill="none"
-                    stroke={C.goldLight}
-                    strokeWidth="1.5"
-                    animate={{ r: [10, 22, 10], opacity: [0.8, 0, 0.8] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
-                  />
-                  <circle cx="170" cy="80" r="5" fill={C.goldLight} />
+              <div style={{ background: "rgba(5, 7, 20, 0.45)", borderRadius: 20, padding: 24, marginBottom: 28, border: `1px solid ${C.borderGlass}` }}>
+                <svg viewBox="0 0 340 150" style={{ width: "100%" }}>
+                  <def><linearGradient id="gGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor={C.indigo} /><stop offset="100%" stopColor={C.cyan} /></linearGradient></def>
+                  <path d="M10 120 Q 80 50 140 90 T 260 30 T 330 15" fill="none" stroke="url(#gGrad)" strokeWidth="3" />
+                  {[120, 90, 30, 15].map((yVal, idx) => <circle key={idx} cx={[80, 140, 260, 330][idx]} cy={yVal} r={4.5} fill={C.skyGlow} />)}
                 </svg>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
-                {[
-                  ["Active", "23", "Markets"],
-                  ["Deals", "48", "Closed Q2"],
-                  ["ROI", "3.4×", "Average"],
-                ].map(([label, val, sub]) => (
-                  <div key={label} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 12, padding: "14px 12px", textAlign: "center", border: "1px solid rgba(255,255,255,0.07)" }}>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{label}</div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: C.goldLight, margin: "4px 0 2px" }}>{val}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.35)" }}>{sub}</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                {[["Market Capture", "+31.4% Growth Mode"], ["Compliance Rating", "100% Risk Insulated"]].map(([lbl, val]) => (
+                  <div key={lbl} style={{ background: "rgba(255,255,255,0.01)", borderRadius: 14, padding: "16px", border: `1px solid ${C.borderGlass}` }}>
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.muted, textTransform: "uppercase" }}>{lbl}</div>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: C.white, marginTop: 4 }}>{val}</div>
                   </div>
                 ))}
-              </div>
-
-              <div style={{ marginTop: 24, display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#4ADE80" }} />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>Live global operations · 14 time zones</span>
               </div>
             </div>
           </motion.div>
         </div>
-
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          style={{
-            position: "absolute",
-            bottom: -20,
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 8,
-            cursor: "pointer",
-            pointerEvents: "auto",
-          }}
-          onClick={() => document.getElementById("services").scrollIntoView({ behavior: "smooth" })}
-        >
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: "0.14em", textTransform: "uppercase" }}>Scroll</span>
-          <ChevronDown size={18} color="rgba(255,255,255,0.3)" />
-        </motion.div>
       </motion.div>
-
-      <style>{`
-        .hero-grid-layout {
-          position: relative;
-        }
-        @media (max-width: 768px) {
-          .hero-grid-layout { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .hero-card-wrap { display: none; }
-        }
-      `}</style>
+      <style>{`@media (max-width: 992px) { .hero-grid-layout { grid-template-columns: 1fr !important; gap: 48px !important; } .hero-card-wrap { display: none !important; } }`}</style>
     </section>
   );
 }
 
-/* ─── SERVICES ────────────────────────────────────────────────────────────── */
-const SERVICES = [
-  {
-    icon: Globe,
-    title: "Market Entry Strategy",
-    desc: "We analyze target markets, assess regulatory landscapes, and build a bespoke roadmap so your brand lands with authority and traction from day one.",
-    features: ["Market Feasibility Studies", "Competitive Positioning", "Regulatory Mapping", "Go-to-Market Execution"],
-    accent: C.goldLight,
-  },
-  {
-    icon: Network,
-    title: "Global Networking",
-    desc: "Leverage our curated network of C-suite executives, government liaisons, and industry gatekeepers across 35+ countries to open doors that matter.",
-    features: ["Executive Introductions", "Trade Delegations", "Partnership Brokering", "Industry Summits"],
-    accent: "#8FB7FF",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Trade Compliance",
-    desc: "Navigate complex import/export regulations, tariff structures, and international trade agreements with confidence — keeping your operations both legal and optimized.",
-    features: ["Export Controls & Licensing", "Customs Classification", "Sanctions Screening", "Compliance Audits"],
-    accent: "#69D7B6",
-  },
-  {
-    icon: TrendingUp,
-    title: "Business Growth Advisory",
-    desc: "Strategic consulting on international scaling — from cross-border M&A to joint ventures — designed to accelerate sustainable revenue growth globally.",
-    features: ["Cross-Border M&A", "Joint Venture Structuring", "International Finance", "KPI & OKR Frameworks"],
-    accent: "#C79BFF",
-  },
-  {
-    icon: Briefcase,
-    title: "Investment Facilitation",
-    desc: "Connect with the right institutional investors, sovereign wealth funds, and private equity partners for your international expansion capital needs.",
-    features: ["Investor Matchmaking", "Due Diligence Support", "Pitch Deck Strategy", "Roadshow Planning"],
-    accent: "#F8B84E",
-  },
-  {
-    icon: Users,
-    title: "Cross-Cultural Leadership",
-    desc: "Equip your teams with the cultural intelligence and communication frameworks to build trust and close deals across diverse international environments.",
-    features: ["Culture Workshops", "Negotiation Training", "Language Briefings", "Protocol Coaching"],
-    accent: "#FF8DC7",
-  },
-];
-
+/* ─── SERVICES MATRICES GRID (INTEGRATED SUB-POINTS) ──────────────────────── */
 function ServiceCard({ svc, index }) {
-  const [ref, inView] = useReveal(0.1);
+  const [ref, inView] = useReveal(0.08);
   const [hovered, setHovered] = useState(false);
   const Icon = svc.icon;
-  const isMobile = useIsMobile();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ type: "spring", stiffness: 110, damping: 18, delay: (index % 3) * 0.10 }}
+      transition={{ type: "spring", stiffness: 90, damping: 20, delay: index * 0.1 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: hovered ? "rgba(5,10,20,0.96)" : "rgba(255,255,255,0.78)",
-        border: `1px solid ${hovered ? svc.accent : "rgba(5,10,20,0.06)"}`,
-        borderRadius: 22,
-        padding: 36,
-        transition: "transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease",
-        transform: hovered && !isMobile ? "translateY(-8px)" : "none",
-        boxShadow: hovered
-          ? `0 24px 60px rgba(5,10,20,0.22), 0 0 0 1px ${svc.accent}22, inset 0 0 40px ${svc.accent}10`
-          : "0 4px 18px rgba(5,10,20,0.05)",
-        cursor: "default",
+        background: hovered ? C.glassHover : C.glassBase,
+        border: `1px solid ${hovered ? svc.accent : C.borderGlass}`,
+        borderRadius: 24,
+        padding: "40px",
+        boxShadow: hovered ? `0 25px 60px rgba(0,0,0,0.45), 0 0 25px ${svc.accent}12` : "none",
+        transition: "all 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
         position: "relative",
         overflow: "hidden",
-        willChange: "transform",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: "auto -30px -40px auto",
-          width: 180,
-          height: 180,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${svc.accent}20 0%, transparent 70%)`,
-          opacity: hovered ? 1 : 0,
-          transition: "opacity 0.35s ease",
-          pointerEvents: "none",
-        }}
-      />
+      <div>
+        <div style={{
+          width: 54, height: 54, borderRadius: 14,
+          background: hovered ? `${svc.accent}20` : "rgba(255,255,255,0.02)",
+          border: `1px solid ${hovered ? svc.accent : C.borderGlass}`,
+          display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 28,
+          transition: "all 0.3s"
+        }}>
+          <Icon size={24} color={svc.accent} />
+        </div>
 
-      <div style={{ width: 54, height: 54, borderRadius: 16, background: hovered ? `${svc.accent}18` : `${svc.accent}10`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22, transition: "background 0.3s" }}>
-        <Icon size={24} color={svc.accent} strokeWidth={1.8} />
+        <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: C.white, marginBottom: 16, lineHeight: 1.25 }}>{svc.title}</h3>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: C.grayText, lineHeight: 1.7, marginBottom: 28 }}>{svc.desc}</p>
       </div>
 
-      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: hovered ? C.white : C.obsidian, margin: "0 0 12px", transition: "color 0.3s" }}>
-        {svc.title}
-      </h3>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: hovered ? "rgba(255,255,255,0.72)" : C.muted, lineHeight: 1.75, margin: "0 0 24px", transition: "color 0.3s" }}>
-        {svc.desc}
-      </p>
-
-      <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-        {svc.features.map((f) => (
-          <li key={f} style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: hovered ? "rgba(255,255,255,0.76)" : C.muted, transition: "color 0.3s" }}>
-            <CheckCircle size={14} color={svc.accent} strokeWidth={2} style={{ flexShrink: 0 }} />
-            {f}
-          </li>
-        ))}
-      </ul>
+      <div style={{ borderTop: `1px solid ${C.borderGlass}`, paddingTop: 24, marginTop: "auto" }}>
+        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: svc.accent, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 16 }}>Operational Matrices</div>
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+          {svc.points.map((pt) => (
+            <li key={pt} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: C.silver, lineHeight: 1.4 }}>
+              <div style={{ width: 5, height: 5, borderRadius: "50%", background: svc.accent, marginTop: 7, flexShrink: 0, boxShadow: `0 0 8px ${svc.accent}` }} />
+              <span>{pt}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </motion.div>
   );
 }
@@ -688,149 +481,112 @@ function ServiceCard({ svc, index }) {
 function Services() {
   const [ref, inView] = useReveal(0.1);
   return (
-    <section id="services" style={{ background: C.offWhite, padding: "100px 5vw" }}>
+    <section id="services" style={{ background: C.bgCard, padding: "140px 5vw", position: "relative" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }} style={{ textAlign: "center", marginBottom: 64 }}>
-          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.gold, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16, padding: "6px 18px", background: `${C.gold}15`, borderRadius: 100 }}>What We Do</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(30px, 4vw, 52px)", fontWeight: 700, color: C.obsidian, margin: "0 0 18px" }}>Our Core Services</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: C.muted, maxWidth: 560, margin: "0 auto", lineHeight: 1.75 }}>
-            Everything you need to expand confidently into new international markets — under one strategic roof.
-          </p>
+        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: 80 }}>
+          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 18, padding: "6px 20px", background: "rgba(56, 189, 248, 0.08)", border: `1px solid rgba(56, 189, 248, 0.15)`, borderRadius: 100 }}>System Frameworks</div>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(34px, 4.2vw, 56px)", fontWeight: 700, color: C.white, margin: 0 }}>Core Service Pillars</h2>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))", gap: 32 }} className="services-grid-layout">
           {SERVICES.map((s, i) => <ServiceCard key={s.title} svc={s} index={i} />)}
         </div>
       </div>
+      <style>{`@media (max-width: 600px) { .services-grid-layout { grid-template-columns: 1fr !important; } }`}</style>
     </section>
   );
 }
 
-/* ─── ABOUT ───────────────────────────────────────────────────────────────── */
+/* ─── ABOUT SYSTEM: VERBATIM EXECUTIVE PARAGRAPH INTEGRATION ────────────── */
 function About() {
   const [ref, inView] = useReveal(0.1);
   return (
-    <section id="about" style={{ background: C.obsidian, padding: "100px 5vw", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: -200, right: -200, width: 600, height: 600, borderRadius: "50%", border: `1px solid rgba(255,215,0,0.08)`, pointerEvents: "none" }} />
-      <div style={{ position: "absolute", top: -100, right: -100, width: 400, height: 400, borderRadius: "50%", border: `1px solid rgba(255,215,0,0.12)`, pointerEvents: "none" }} />
+    <section id="about" style={{ background: C.bgDeep, padding: "140px 5vw", position: "relative", overflow: "hidden" }}>
+      <GlowOrb color={C.indigo} size={600} left="45%" top="-15%" delay={1} />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }} className="about-grid">
-          <motion.div ref={ref} initial={{ opacity: 0, x: -40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, type: "spring", stiffness: 90, damping: 18 }}>
-            <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.goldLight, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 20, padding: "6px 18px", background: `${C.gold}15`, borderRadius: 100 }}>Who We Are</div>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 3.5vw, 48px)", fontWeight: 700, color: C.white, lineHeight: 1.15, margin: "0 0 24px" }}>
-              Built on Trust,<br />
-              <span style={{ color: C.goldLight, fontStyle: "italic" }}>Driven by Results.</span>
+      <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 80, alignItems: "center" }} className="about-grid">
+          <motion.div ref={ref} initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8 }}>
+            <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.purple, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 22, padding: "6px 20px", background: "rgba(124, 58, 237, 0.08)", border: `1px solid rgba(124, 58, 237, 0.15)`, borderRadius: 100 }}>Corporate Charter</div>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 700, color: C.white, lineHeight: 1.15, margin: "0 0 28px" }}>
+              Strategic Operational Management &<br />
+              <span style={{ backgroundImage: `linear-gradient(135deg, ${C.cyan}, ${C.purple})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontStyle: "italic" }}>Domestic-Global Execution.</span>
             </h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "rgba(255,255,255,0.68)", lineHeight: 1.8, margin: "0 0 20px" }}>
-              JAK Positivity was founded on a simple belief: that every business deserves access to global markets, regardless of their starting point. We combine decades of international business experience with on-the-ground relationships in emerging and established markets alike.
-            </p>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "rgba(255,255,255,0.68)", lineHeight: 1.8, margin: "0 0 40px" }}>
-              Our multidisciplinary team of strategists, lawyers, and network architects work in concert — giving clients a holistic, end-to-end advantage that single-service firms simply cannot match.
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: C.silver, lineHeight: 1.85, marginBottom: 36, textAlign: "justify" }}>
+              jck Positivity partners with businesses to drive sustainable growth across global and domestic markets. Our expertise spans market entry, route-to-market strategy, distribution design, trade and product compliance, packaging solutions, and commercial execution. We help companies navigate the complexities of international markets by identifying the right opportunities, developing the right product portfolio, and connecting them with suitable strategic partners and distribution networks across diverse regions. With experience across multiple industries and geographies, we enable businesses to expand confidently while minimising risk and maximising commercial potential. Beyond business development, we provide strategic and operational management support, including P&L oversight, performance improvement, brownfield expansion, and end-to-end business optimisation. We work alongside organisations not only to unlock new opportunities, but to strengthen and manage the businesses behind them.
             </p>
             <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
-              Partner With Us <ArrowRight size={15} />
+              Initiate Enterprise Partnership <ArrowRight size={15} />
             </MagneticButton>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 90, damping: 18 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <motion.div initial={{ opacity: 0, x: 30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {[
-                { icon: Award, title: "Decade of Expertise", desc: "10+ years navigating complex international business environments across 6 continents." },
-                { icon: Globe, title: "35+ Country Network", desc: "Established relationships with key decision-makers, regulators, and industry leaders worldwide." },
-                { icon: ShieldCheck, title: "Full Compliance", desc: "Every strategy is built to be legally sound, culturally sensitive, and commercially robust." },
-                { icon: TrendingUp, title: "Measurable Growth", desc: "Our clients see an average 3.4× ROI on international expansion projects within 24 months." },
-              ].map((p, i) => {
+                { icon: Target, title: "Precision Target Matching", desc: "Aligning your cross-border roadmap with verified regional distribution networks." },
+                { icon: Shield, title: "Insulated Risk Profiles", desc: "Rigorous product safety, structural packaging, and trade compliance architectures." },
+                { icon: Zap, title: "End-to-End Core Optimization", desc: "Direct involvement inside P&L oversight setups and structural turnaround actions." }
+              ].map((p) => {
                 const Icon = p.icon;
                 return (
-                  <motion.div
-                    key={p.title}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.12 * i + 0.26, type: "spring", stiffness: 100, damping: 18 }}
-                    style={{
-                      display: "flex",
-                      gap: 20,
-                      padding: 24,
-                      background: "rgba(255,255,255,0.05)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      borderRadius: 16,
-                      alignItems: "flex-start",
-                      backdropFilter: "blur(30px)",
-                    }}
-                  >
-                    <div style={{ width: 44, height: 44, borderRadius: 12, background: `${C.gold}18`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <Icon size={20} color={C.goldLight} strokeWidth={1.8} />
+                  <div key={p.title} style={{ display: "flex", gap: 22, padding: 28, background: C.glassBase, border: `1px solid ${C.borderGlass}`, borderRadius: 22, backdropFilter: "blur(20px)" }}>
+                    <div style={{ width: 48, height: 48, borderRadius: 12, background: "rgba(255,255,255,0.02)", border: `1px solid ${C.borderGlass}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <Icon size={20} color={C.skyGlow} />
                     </div>
                     <div>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 15, color: C.white, marginBottom: 6 }}>{p.title}</div>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.58)", lineHeight: 1.65 }}>{p.desc}</div>
+                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 16, color: C.white, marginBottom: 6 }}>{p.title}</div>
+                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: C.grayText, lineHeight: 1.6 }}>{p.desc}</div>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
           </motion.div>
         </div>
       </div>
-      <style>{`@media (max-width: 768px) { .about-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }`}</style>
+      <style>{`@media (max-width: 992px) { .about-grid { grid-template-columns: 1fr !important; gap: 54px !important; } }`}</style>
     </section>
   );
 }
 
-/* ─── RESULTS / TESTIMONIALS ──────────────────────────────────────────────── */
-const TESTIMONIALS = [
-  { name: "Amara Nwosu", role: "CEO, NovaTech Africa", text: "JAK Positivity helped us enter three European markets in under 12 months. Their network and strategic guidance were unparalleled. We closed partnerships we thought would take years.", stars: 5 },
-  { name: "David Chen", role: "Managing Director, AsiaLink Corp", text: "The trade compliance team saved us from a costly regulatory mistake. Their due diligence is exceptional. I recommend them to every business leader looking East.", stars: 5 },
-  { name: "Sophie Laurent", role: "Founder, Maison Lumière", text: "From our first consultation, JAK felt like a true partner, not a vendor. Our Middle East launch was executed flawlessly. The ROI has been extraordinary.", stars: 5 },
-];
-
+/* ─── RESULTS METRIC VALIDATION ───────────────────────────────────────────── */
 function Results() {
   const [ref, inView] = useReveal(0.1);
   return (
-    <section id="results" style={{ background: C.offWhite, padding: "100px 5vw" }}>
+    <section id="results" style={{ background: C.bgCard, padding: "140px 5vw" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }} style={{ textAlign: "center", marginBottom: 64 }}>
-          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.gold, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16, padding: "6px 18px", background: `${C.gold}15`, borderRadius: 100 }}>Client Results</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 700, color: C.obsidian, margin: "0 0 16px" }}>What Our Clients Say</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: C.muted, maxWidth: 500, margin: "0 auto" }}>Real outcomes for real businesses across every continent.</p>
+        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: 80 }}>
+          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.teal, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 18, padding: "6px 20px", background: "rgba(20, 184, 166, 0.08)", border: `1px solid rgba(20, 184, 166, 0.15)`, borderRadius: 100 }}>System Validation</div>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 54px)", fontWeight: 700, color: C.white, margin: 0 }}>Vouched Benchmarks</h2>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
-          {TESTIMONIALS.map((t, i) => {
-            const [tRef, tInView] = useReveal(0.1);
-            return (
-              <motion.div
-                key={t.name}
-                ref={tRef}
-                initial={{ opacity: 0, y: 40 }}
-                animate={tInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.65, delay: i * 0.15, type: "spring", stiffness: 90, damping: 18 }}
-                style={{ background: C.white, border: `1px solid rgba(5,10,20,0.08)`, borderRadius: 20, padding: 36, boxShadow: "0 4px 24px rgba(5,10,20,0.06)" }}
-              >
-                <div style={{ display: "flex", gap: 3, marginBottom: 24 }}>
-                  {[...Array(t.stars)].map((_, j) => <Star key={j} size={15} color={C.goldLight} fill={C.goldLight} />)}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 32 }}>
+          {TESTIMONIALS.map((t) => (
+            <div key={t.name} style={{ background: C.glassBase, border: `1px solid ${C.borderGlass}`, borderRadius: 24, padding: 42, boxShadow: "inset 0 1px 1px rgba(255,255,255,0.02)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <div style={{ display: "flex", gap: 4, marginBottom: 28 }}>
+                  {[...Array(5)].map((_, j) => <Star key={j} size={14} color={C.skyGlow} fill={C.skyGlow} />)}
                 </div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: C.muted, lineHeight: 1.75, margin: "0 0 28px", fontStyle: "italic" }}>"{t.text}"</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: "50%", background: `linear-gradient(135deg, ${C.obsidian}, ${C.slateLight})`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 14, color: C.goldLight }}>
-                    {t.name.split(" ").map(n => n[0]).join("")}
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 14, color: C.obsidian }}>{t.name}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: C.muted, marginTop: 2 }}>{t.role}</div>
-                  </div>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: C.silver, lineHeight: 1.8, marginBottom: 36, fontStyle: "italic" }}>"{t.text}"</p>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{ width: 46, height: 46, borderRadius: "50%", background: `linear-gradient(135deg, ${C.indigo}, ${C.cyan})`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: 14, color: C.white }}>
+                  {t.signature}
                 </div>
-              </motion.div>
-            );
-          })}
+                <div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 15, color: C.white }}>{t.name}</div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: C.muted, marginTop: 2 }}>{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ─── CONTACT FORM ────────────────────────────────────────────────────────── */
+/* ─── CONTACT GLASS SIGNAL ENGINE ─────────────────────────────────────────── */
 function Contact() {
   const [ref, inView] = useReveal(0.1);
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
@@ -861,271 +617,145 @@ function Contact() {
         from_email: form.email,
         service: form.service,
         message: form.message,
-        to_name: "JAK Positivity Team",
+        to_name: "JCK Positivity Management Terminal",
       });
 
       setStatus("success");
       setForm({ name: "", email: "", service: "", message: "" });
     } catch (err) {
-      console.error("EmailJS error:", err);
       if (EMAILJS_CONFIG.serviceId === "YOUR_SERVICE_ID") {
-        setErrorMsg("EmailJS is not yet configured. Please update EMAILJS_CONFIG at the top of the file with your credentials.");
+        setErrorMsg("System node credentials unconfigured. Map valid credentials into the top config block.");
       } else {
-        setErrorMsg("Something went wrong. Please try again or contact us directly.");
+        setErrorMsg("Transmission interruption. Please restart routing execution loop.");
       }
       setStatus("error");
     }
   };
 
-  const inputStyle = {
-    width: "100%",
-    boxSizing: "border-box",
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.12)",
-    borderRadius: 12,
-    padding: "14px 18px",
-    color: C.white,
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: 15,
-    outline: "none",
-    transition: "border-color 0.2s",
-    touchAction: "manipulation",
-    WebkitTapHighlightColor: "transparent",
-  };
-
-  const labelStyle = { fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.6)", letterSpacing: "0.05em", display: "block", marginBottom: 8 };
+  const inputStyle = { width: "100%", boxSizing: "border-box", background: "rgba(5, 7, 20, 0.45)", border: `1px solid ${C.borderGlass}`, borderRadius: 14, padding: "16px 20px", color: C.white, fontFamily: "'DM Sans', sans-serif", fontSize: 15, outline: "none", transition: "all 0.3s" };
+  const labelStyle = { fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: C.grayText, fontWeight: 500, display: "block", marginBottom: 8 };
 
   return (
-    <section id="contact" style={{ background: C.obsidian, padding: "100px 5vw", position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", bottom: -300, left: -200, width: 700, height: 700, borderRadius: "50%", background: `radial-gradient(circle, rgba(255,215,0,0.07) 0%, transparent 65%)`, pointerEvents: "none" }} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(5,10,20,0.0), rgba(5,10,20,0.26))", pointerEvents: "none" }} />
+    <section id="contact" style={{ background: C.bgDeep, padding: "140px 5vw", position: "relative" }}>
+      <GlowOrb color={C.cyan} size={550} left="10%" top="45%" delay={4} />
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
-        <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, type: "spring", stiffness: 90, damping: 18 }} style={{ textAlign: "center", marginBottom: 64 }}>
-          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.goldLight, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16, padding: "6px 18px", background: `${C.gold}15`, borderRadius: 100 }}>Get In Touch</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 700, color: C.white, margin: "0 0 16px" }}>Book Your Free Consultation</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.55)", maxWidth: 520, margin: "0 auto" }}>
-            Tell us about your global ambitions. We'll respond within 24 hours with a tailored approach.
-          </p>
+      <div style={{ maxWidth: 1150, margin: "0 auto", position: "relative", zIndex: 10 }}>
+        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: 80 }}>
+          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 18, padding: "6px 20px", background: "rgba(56, 189, 248, 0.08)", border: `1px solid rgba(56, 189, 248, 0.15)`, borderRadius: 100 }}>Secure Channel</div>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(32px, 4vw, 54px)", fontWeight: 700, color: C.white, margin: 0 }}>Initiate Connection Protocol</h2>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: 56, alignItems: "start" }} className="contact-grid">
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.1, type: "spring", stiffness: 100, damping: 18 }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 32 }}>Let's talk global growth.</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 64 }} className="contact-grid">
+          <div>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, fontWeight: 700, color: C.white, marginBottom: 36 }}>Advisory Terminals</div>
             {[
-              { icon: Mail, label: "Email", value: "hello@jakpositivity.com" },
-              { icon: Phone, label: "Phone", value: "+1 (888) 525-0199" },
-              { icon: MapPin, label: "HQ", value: "New York · London · Dubai" },
+              { icon: Mail, label: "SECURE COMMS", value: "hello@jckpositivity.com" },
+              { icon: Phone, label: "ROUTING ACCESS", value: "+1 (888) 525-0199" },
+              { icon: MapPin, label: "GLOBAL SYNDICATE SYNC", value: "New York · London · Dubai" },
             ].map(({ icon: Icon, label, value }) => (
-              <div key={label} style={{ display: "flex", gap: 18, alignItems: "flex-start", marginBottom: 28 }}>
-                <div style={{ width: 42, height: 42, borderRadius: 11, background: `${C.gold}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Icon size={18} color={C.goldLight} strokeWidth={1.8} />
+              <div key={label} style={{ display: "flex", gap: 18, marginBottom: 32 }}>
+                <div style={{ width: 46, height: 46, borderRadius: 12, background: "rgba(255,255,255,0.02)", border: `1px solid ${C.borderGlass}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Icon size={18} color={C.skyGlow} />
                 </div>
                 <div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 4 }}>{label}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.8)" }}>{value}</div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.muted, textTransform: "uppercase", letterSpacing: "0.1em" }}>{label}</div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: C.silver, marginTop: 4 }}>{value}</div>
                 </div>
               </div>
             ))}
+          </div>
 
-            <div style={{ display: "flex", gap: 14, marginTop: 40 }}>
-              {[Linkedin, Twitter, Facebook].map((Icon, i) => (
-                <div
-                  key={i}
-                  style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.2s", touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = `${C.gold}20`)}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
-                >
-                  <Icon size={17} color="rgba(255,255,255,0.5)" strokeWidth={1.8} />
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2, type: "spring", stiffness: 100, damping: 18 }}>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "40px 36px", backdropFilter: "blur(30px)", WebkitBackdropFilter: "blur(30px)" }}>
+          <div>
+            <div style={{ background: C.glassBase, border: `1px solid ${C.borderGlass}`, borderRadius: 24, padding: 44, backdropFilter: "blur(30px)" }}>
               {status === "success" ? (
-                <motion.div initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} style={{ textAlign: "center", padding: "40px 0" }}>
-                  <div style={{ width: 72, height: 72, borderRadius: "50%", background: `${C.gold}20`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>
-                    <CheckCircle size={36} color={C.goldLight} />
-                  </div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: C.white, marginBottom: 12 }}>Message Sent!</div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
-                    Thank you! Our team will be in touch within 24 hours with a personalised strategy brief.
-                  </p>
-                  <MagneticButton onClick={() => setStatus("idle")} variant="secondary" style={{ marginTop: 28 }}>
-                    Send Another
-                  </MagneticButton>
-                </motion.div>
+                <div style={{ textAlign: "center", padding: "40px 0" }}>
+                  <CheckCircle size={46} color={C.teal} style={{ marginBottom: 18 }} />
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, color: C.white, marginBottom: 10 }}>Signal Routed Successfully</div>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif', size: 14", color: C.grayText }}>Our corporate strategy coordinators will initialize decryption sequences within 24 operational hours.</p>
+                </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }} className="form-grid">
                     <div>
-                      <label style={labelStyle}>Full Name *</label>
-                      <input
-                        name="name"
-                        required
-                        value={form.name}
-                        onChange={handleChange}
-                        placeholder="Jane Smith"
-                        style={inputStyle}
-                        onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                        onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
-                      />
+                      <label style={labelStyle}>Identity Token *</label>
+                      <input name="name" required value={form.name} onChange={handleChange} placeholder="Jane Smith" style={inputStyle} />
                     </div>
                     <div>
-                      <label style={labelStyle}>Email Address *</label>
-                      <input
-                        name="email"
-                        type="email"
-                        required
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="jane@company.com"
-                        style={inputStyle}
-                        onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                        onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
-                      />
+                      <label style={labelStyle}>Secure Routing Email *</label>
+                      <input name="email" type="email" required value={form.email} onChange={handleChange} placeholder="jane@corporation.com" style={inputStyle} />
                     </div>
                   </div>
 
                   <div style={{ marginBottom: 20 }}>
-                    <label style={labelStyle}>Service of Interest *</label>
-                    <select
-                      name="service"
-                      required
-                      value={form.service}
-                      onChange={handleChange}
-                      style={{
-                        ...inputStyle,
-                        appearance: "none",
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "right 16px center",
-                      }}
-                      onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
-                    >
-                      <option value="" disabled style={{ background: C.obsidian }}>Select a service…</option>
-                      <option value="Market Entry Strategy" style={{ background: C.obsidian }}>Market Entry Strategy</option>
-                      <option value="Global Networking" style={{ background: C.obsidian }}>Global Networking</option>
-                      <option value="Trade Compliance" style={{ background: C.obsidian }}>Trade Compliance</option>
-                      <option value="Business Growth Advisory" style={{ background: C.obsidian }}>Business Growth Advisory</option>
-                      <option value="Investment Facilitation" style={{ background: C.obsidian }}>Investment Facilitation</option>
-                      <option value="Cross-Cultural Leadership" style={{ background: C.obsidian }}>Cross-Cultural Leadership</option>
-                      <option value="General Inquiry" style={{ background: C.obsidian }}>General Inquiry</option>
+                    <label style={labelStyle}>Target Capability Protocol *</label>
+                    <select name="service" required value={form.service} onChange={handleChange} style={inputStyle}>
+                      <option value="" disabled>Select capability matrix pipeline...</option>
+                      {SERVICES.map(s => <option key={s.title} value={s.title} style={{ background: C.bgCard }}>{s.title}</option>)}
                     </select>
                   </div>
 
-                  <div style={{ marginBottom: 28 }}>
-                    <label style={labelStyle}>Your Message *</label>
-                    <textarea
-                      name="message"
-                      required
-                      rows={5}
-                      value={form.message}
-                      onChange={handleChange}
-                      placeholder="Tell us about your business, target markets, and goals…"
-                      style={{ ...inputStyle, resize: "vertical", minHeight: 130, lineHeight: 1.65 }}
-                      onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
-                    />
+                  <div style={{ marginBottom: 32 }}>
+                    <label style={labelStyle}>Macro Execution Objective *</label>
+                    <textarea name="message" required rows={5} value={form.message} onChange={handleChange} placeholder="Define your domestic/global scaling goals, industry constraints, or operational bottlenecks..." style={{ ...inputStyle, resize: "none" }} />
                   </div>
 
                   {status === "error" && (
-                    <div style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)", borderRadius: 10, padding: "12px 16px", marginBottom: 20, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#FCA5A5" }}>
-                      {errorMsg || "An error occurred. Please try again."}
+                    <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "14px 18px", marginBottom: 24, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#FCA5A5" }}>
+                      {errorMsg}
                     </div>
                   )}
 
-                  <MagneticButton
-                    type="submit"
-                    style={{
-                      width: "100%",
-                      justifyContent: "center",
-                      padding: "16px 32px",
-                      background: status === "loading" ? "rgba(184,134,11,0.52)" : `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`,
-                      color: C.obsidian,
-                    }}
-                  >
-                    {status === "loading" ? (
-                      <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          style={{ width: 18, height: 18, borderRadius: "50%", border: `2px solid ${C.obsidian}`, borderTopColor: "transparent" }}
-                        />
-                        Sending…
-                      </>
-                    ) : (
-                      <><Send size={16} /> Send My Enquiry</>
-                    )}
+                  <MagneticButton type="submit" style={{ width: "100%", justifyContent: "center" }}>
+                    {status === "loading" ? "Transmitting Signal Matrix..." : "Dispatch Connection Signal"}
                   </MagneticButton>
                 </form>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-
       <style>{`
-        @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr !important; } }
-        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 992px) { .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr !important; gap: 20px !important; } }
       `}</style>
     </section>
   );
 }
 
-/* ─── FOOTER ──────────────────────────────────────────────────────────────── */
+/* ─── CORPORATE ARCHITECTURAL FOOTER ──────────────────────────────────────── */
 function Footer() {
   return (
-    <footer style={{ background: "#07111E", padding: "48px 5vw 32px", borderTop: `1px solid rgba(255,215,0,0.12)` }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24, marginBottom: 32 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 9, background: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Globe size={17} color={C.obsidian} strokeWidth={2.2} />
-            </div>
-            <div>
-              <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 15, color: C.white }}>JAK Positivity</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 9, color: C.goldLight, letterSpacing: "0.18em", textTransform: "uppercase" }}>International Business Development</div>
-            </div>
+    <footer style={{ background: "#040610", padding: "54px 5vw 36px", borderTop: `1px solid ${C.borderGlass}` }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: `linear-gradient(135deg, ${C.indigo}, ${C.purple})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Globe size={18} color={C.white} />
           </div>
-          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "rgba(255,255,255,0.3)", textAlign: "center" }}>
-            © {new Date().getFullYear()} JAK Positivity Ltd. All rights reserved.
-          </div>
-          <div style={{ display: "flex", gap: 20 }}>
-            {["Privacy Policy", "Terms of Service"].map(t => (
-              <span key={t} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", cursor: "pointer" }}>{t}</span>
-            ))}
-          </div>
+          <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 17, color: C.white }}>JCK Positivity Framework</span>
+        </div>
+        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: C.muted }}>
+          © {new Date().getFullYear()} JCK Positivity Corporation. Secure Encryption Protocol standard Alpha-6.
         </div>
       </div>
     </footer>
   );
 }
 
-/* ─── ROOT APP ────────────────────────────────────────────────────────────── */
+/* ─── RUNTIME SYSTEM ROOT ─────────────────────────────────────────────────── */
 export default function App() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { background: ${C.obsidian}; }
-        ::selection { background: ${C.gold}55; color: ${C.white}; }
+        body { background: ${C.bgDeep}; overflow-x: hidden; }
+        ::selection { background: ${C.indigo}66; color: ${C.white}; }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: ${C.obsidian}; }
-        ::-webkit-scrollbar-thumb { background: ${C.gold}60; border-radius: 3px; }
-        input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.25); }
-        select option { background: ${C.obsidian}; color: ${C.white}; }
-        button, a, input, textarea, select {
-          -webkit-tap-highlight-color: transparent;
-        }
-        @media (max-width: 768px) {
-          .nav-mobile { display: block !important; }
-        }
+        ::-webkit-scrollbar-track { background: ${C.bgDeep}; }
+        ::-webkit-scrollbar-thumb { background: ${C.borderGlass}; border-radius: 3px; }
+        input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.2) !important; }
+        select { color-scheme: dark; }
       `}</style>
       <Nav />
       <Hero />
