@@ -364,7 +364,7 @@ function Hero() {
             <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(79, 70, 229, 0.12)", border: `1px solid ${C.borderGlow}`, borderRadius: 100, padding: "6px 20px", marginBottom: 30 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.cyan, boxShadow: `0 0 10px ${C.cyan}` }} />
-                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600 }}>Global Business Transformation</span>
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600 }}> International Business Development</span>
               </div>
             </motion.div>
 
@@ -382,7 +382,7 @@ function Hero() {
                 letterSpacing: "-0.02em"
               }}
             >
-              International Business Development & Management
+            Business Development & Management
 
               {/* Subheading Row: Forced to one line, smaller scale, custom styled brown & green */}
               <span style={{
