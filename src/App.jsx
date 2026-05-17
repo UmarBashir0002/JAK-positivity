@@ -166,7 +166,7 @@ function Nav() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const links = ["Home", "Services", "About", "Results", "Contact"];
+  const links = ["Home", "About", "Services", "Results", "Contact"];
   const scroll = (id) => {
     setOpen(false);
     const element = document.getElementById(id.toLowerCase());
@@ -517,8 +517,7 @@ function Hero() {
                 letterSpacing: "0.01em",
               }}
             >
-              JAK Positivity strengthens existing businesses and helps build new ventures through strategic brownfield and greenfield development. We enable sustainable expansion, operational excellence, and long-term commercial growth across international and regional markets.
-            </motion.p>
+              JAK Positivity drives international business growth by enabling strategic trade expansion, launching scalable greenfield ventures, and transforming brownfield operations into high-performing businesses. We deliver sustainable growth, operational excellence, and long-term commercial value across regional and global markets       </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 18 }}
@@ -825,7 +824,9 @@ const SERVICES = [
       "Go-to-market strategy and execution support",
       "Regulatory and compliance mapping",
       "Distributor and channel partner selection",
-      "Global exhibitions and trade show participation"
+      "Global exhibitions and trade show participation",
+      "Channel specific needs",
+      "Multi-channel strategies including mainstream and ethnic"
     ],
     accent: C.goldLight,
   },
@@ -977,11 +978,11 @@ function About() {
     {
       icon: Award,
       title: "Decade of Expertise",
-      desc: "More than 10 years of experience in international business environments, market expansion, and operational growth.",
+      desc: "More than 30 years of experience in international business environments, market expansion, and operational growth.",
     },
     {
       icon: Globe,
-      title: "35+ Country Network",
+      title: "65+ Country Network",
       desc: "Strong relationships with business leaders, partners, and decision-makers across global markets.",
     },
     {
@@ -993,6 +994,16 @@ function About() {
       icon: TrendingUp,
       title: "Measurable Growth",
       desc: "Focused on commercial clarity, sustainable scaling, and long-term business performance.",
+    },
+    {
+      icon: Globe,
+      title: "International Expansion",
+      desc: "Proven execution across global landscapes, successfully entering 12 new countries and markets.",
+    },
+    {
+      icon: Target,
+      title: "Greenfield Success Rate",
+      desc: "Delivering commercial targets on schedule with an 83% success rate for newly built ventures.",
     },
   ];
 
@@ -1068,9 +1079,11 @@ function About() {
                 margin: "0 0 16px",
               }}
             >
-Global Route to Market,              <br />
-              <span style={{  fontSize: "clamp(15px, 1.6vw, 26px)",
-                fontWeight: 350, color: C.goldLight, fontStyle: "italic" }}>International Business Management</span>
+              Global Route to Market,              <br />
+              <span style={{
+                fontSize: "clamp(15px, 1.6vw, 26px)",
+                fontWeight: 350, color: C.goldLight, fontStyle: "italic"
+              }}>International Business Management</span>
             </h2>
 
             <p
@@ -1084,7 +1097,7 @@ Global Route to Market,              <br />
                 maxWidth: 620,
               }}
             >
-              JAK Positivity partners with businesses to drive sustainable growth across global and domestic markets. Our expertise spans market entry, route-to-market strategy, distribution design, trade and product compliance, packaging solutions, and commercial execution.            </p>
+              JAK Positivity partners with businesses to drive sustainable growth across global and domestic markets. Our expertise spans across but not limited to market entry, International business partnership development, Revamping product portfolio matching to regional needs,  route-to-market strategy, distribution design, product and packaging compliance, packaging solutions by channels, and commercial execution.                      </p>
 
             <p
               className="about-text"
@@ -1097,8 +1110,20 @@ Global Route to Market,              <br />
                 maxWidth: 620,
               }}
             >
-              We help companies navigate the complexities of international markets by identifying the right opportunities, developing the right product portfolio, and connecting them with suitable strategic partners and distribution networks across diverse regions. Beyond business development, we provide strategic and operational management support, including P&L oversight, performance improvement, brownfield expansion, and end-to-end business optimisation.            </p>
-
+              We help companies navigate the complexities of international markets by identifying the right opportunities, developing the right product portfolio, and connecting them with suitable strategic partners and distribution networks across diverse regions. Beyond business development, we provide strategic and operational management support, including P&L oversight, performance improvement, brownfield expansion, and end-to-end business optimisation.
+            </p>
+            <p
+              className="about-text"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 16,
+                color: "rgba(255,255,255,0.70)",
+                lineHeight: 1.85,
+                margin: "0 0 34px",
+                maxWidth: 620,
+              }}
+            >
+Brownfield transformation initiatives have driven up to 45% growth in revenue and profitability through strategic modernization and operational optimization. Our trade and distribution expansion strategies have strengthened export volumes, channel reach, and international partnerships. By reducing costs, lead times, and process inefficiencies, businesses achieved greater operational efficiency and sustainable long-term value creation through improved CAGR, EBITDA growth, and enterprise performance.            </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
               <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
                 Partner With Us <ArrowRight size={15} />
@@ -1399,9 +1424,9 @@ function Contact() {
           <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.1, type: "spring", stiffness: 100, damping: 18 }}>
             <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 32 }}>Let's talk global growth.</div>
             {[
-              { icon: Mail, label: "Email", value: "hello@jakpositivity.com" },
-              { icon: Phone, label: "Phone", value: "+1 (888) 525-0199" },
-              { icon: MapPin, label: "HQ", value: "New York · London · Dubai" },
+              { icon: Mail, label: "Email", value: "naveedkhhan@yahoo.com" },
+              { icon: Phone, label: "Phone", value: "+971 50 413 1572" },
+              { icon: MapPin, label: "HQ", value: "Dubai. Toronto. Islamabad" },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} style={{ display: "flex", gap: 18, alignItems: "flex-start", marginBottom: 28 }}>
                 <div style={{ width: 42, height: 42, borderRadius: 11, background: `${C.gold}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -1435,7 +1460,7 @@ function Contact() {
                   <div style={{ width: 72, height: 72, borderRadius: "50%", background: `${C.gold}20`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>
                     <CheckCircle size={36} color={C.goldLight} />
                   </div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: C.white, marginBottom: 12 }}>Message Sent!</div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, fontWeight: 700, color: C.white, marginBottom: 12 }}> Thank you! Our team will be in touch within 24 hours for Initial discussions.</div>
                   <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
                     Thank you! Our team will be in touch within 24 hours with a personalised strategy brief.
                   </p>
@@ -1493,12 +1518,17 @@ function Contact() {
                       onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
                     >
                       <option value="" disabled style={{ background: C.obsidian }}>Select a service…</option>
+                      <option value="International Business Expansion" style={{ background: C.obsidian }}>International Business Expansion</option>
+                      <option value="International Business Management" style={{ background: C.obsidian }}>International Business Management</option>
                       <option value="Market Entry Strategy" style={{ background: C.obsidian }}>Market Entry Strategy</option>
                       <option value="Global Networking" style={{ background: C.obsidian }}>Global Networking</option>
-                      <option value="Trade Compliance" style={{ background: C.obsidian }}>Trade Compliance</option>
-                      <option value="Business Growth Advisory" style={{ background: C.obsidian }}>Business Growth Advisory</option>
-                      <option value="Investment Facilitation" style={{ background: C.obsidian }}>Investment Facilitation</option>
-                      <option value="Cross-Cultural Leadership" style={{ background: C.obsidian }}>Cross-Cultural Leadership</option>
+                      <option value="Packaging Compliance" style={{ background: C.obsidian }}>Packaging Compliance</option>
+                      <option value="Product Portfolio" style={{ background: C.obsidian }}>Product Portfolio</option>
+                      <option value="Long Term Business Growth Advisory" style={{ background: C.obsidian }}>Long Term Business Growth Advisory</option>
+                      <option value="Global Exhibitions End to End" style={{ background: C.obsidian }}>Global Exhibitions End to End</option>
+                      <option value="Brown Field Venture Transformation" style={{ background: C.obsidian }}>Brown Field Venture Transformation</option>
+                      <option value="Green Field Launch" style={{ background: C.obsidian }}>Green Field Launch</option>
+                      <option value="M&A, Joint Venture Planning and Execution" style={{ background: C.obsidian }}>M&A, Joint Venture Planning and Execution</option>
                       <option value="General Inquiry" style={{ background: C.obsidian }}>General Inquiry</option>
                     </select>
                   </div>
