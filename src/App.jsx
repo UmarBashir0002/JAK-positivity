@@ -1079,7 +1079,7 @@ function About() {
                 margin: "0 0 16px",
               }}
             >
-              Global Route to Market,              <br />
+              Route to Global Market,              <br />
               <span style={{
                 fontSize: "clamp(15px, 1.6vw, 26px)",
                 fontWeight: 350, color: C.goldLight, fontStyle: "italic"
