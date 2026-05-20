@@ -1153,7 +1153,7 @@ function About() {
               }}
             >
 Through disciplined execution, strategic transformation, and market-focused expansion, JAK Positivity enables businesses to unlock sustainable growth, stronger profitability, and long-term enterprise value.
-Because We Believe in Jacking Up the Positivity.                      </p>
+Because we believe in Jacking Up the Positivity.                      </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
               <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
                 Partner With Us <ArrowRight size={15} />
