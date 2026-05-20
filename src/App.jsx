@@ -845,20 +845,37 @@ const SERVICES = [
     accent: "#8FB7FF",
   },
   {
-    icon: Layers,
-    title: "Greenfield Project Development & New Venture Creation",
-    desc: "Translate venture architecture blueprints into highly stable, validated, and operational commercial realities with long-range planning accuracy.",
-    points: [
-      "Greenfield project development",
-      "Business feasibility and validation",
-      "Operating model and business planning",
-      "Entity setup and operational launch",
-      "Early-stage go-to-market execution",
-      "3–5 year strategic growth planning",
-      "Portfolio and expansion strategy"
-    ],
-    accent: "#69D7B6",
-  },
+  icon: Layers,
+  title: "Greenfield Project Launch & Brownfield Transformation",
+  desc: "Translate new venture concepts and existing business operations into scalable, commercially viable, and operationally efficient growth platforms through structured execution and long-range strategic planning.",
+
+  points: [
+    "GREENFIELD PROJECT LAUNCH",
+    "New business and market opportunity development",
+    "Business feasibility, commercial validation, and investment assessment",
+    "Operating model design and business planning",
+    "Entity setup, infrastructure development, and operational launch",
+    "Early-stage go-to-market execution and channel activation",
+    "3–5 year strategic growth planning and scale-up roadmap",
+    "Portfolio expansion and geographic market entry strategy",
+
+    "",
+
+    "BROWNFIELD TRANSFORMATION",
+    "Existing business operational assessment and diagnostics",
+    "Business restructuring and performance turnaround initiatives",
+    "Supply chain, capability, and process optimization",
+    "Commercial transformation including pricing, margin, and portfolio enhancement",
+    "Distribution restructuring and channel efficiency improvement",
+    "Brand revitalization and market repositioning",
+    "Digitalization, governance, and compliance enhancement",
+    "Capacity expansion, productivity improvement, and cost optimization",
+    "Integration of new systems, processes, and performance management frameworks",
+    "Sustainable growth and transformation roadmap development for 3–5 years",
+  ],
+
+  accent: "#69D7B6",
+},
   {
     icon: Network,
     title: "JV, Distribution & Investment Partnering",
@@ -1123,7 +1140,20 @@ function About() {
                 maxWidth: 620,
               }}
             >
-Brownfield transformation initiatives have driven up to 45% growth in revenue and profitability through strategic modernization and operational optimization. Our trade and distribution expansion strategies have strengthened export volumes, channel reach, and international partnerships. By reducing costs, lead times, and process inefficiencies, businesses achieved greater operational efficiency and sustainable long-term value creation through improved CAGR, EBITDA growth, and enterprise performance.            </p>
+              Brownfield transformation initiatives have driven up to 45% growth in revenue and profitability through strategic modernization and operational optimization. Our trade and distribution expansion strategies have strengthened export volumes, channel reach, and international partnerships. By reducing costs, lead times, and process inefficiencies, businesses achieved greater operational efficiency and sustainable long-term value creation through improved CAGR, EBITDA growth, and enterprise performance.            </p>
+               <p
+              className="about-text"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 16,
+                color: "rgba(255,255,255,0.70)",
+                lineHeight: 1.85,
+                margin: "0 0 34px",
+                maxWidth: 620,
+              }}
+            >
+Through disciplined execution, strategic transformation, and market-focused expansion, JAK Positivity enables businesses to unlock sustainable growth, stronger profitability, and long-term enterprise value.
+Because We Believe in Jacking Up the Positivity.                      </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
               <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
                 Partner With Us <ArrowRight size={15} />
