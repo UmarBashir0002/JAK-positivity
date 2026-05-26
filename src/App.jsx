@@ -14,9 +14,9 @@ import {
    4. Copy your Service ID, Template ID, and Public Key below
    ─────────────────────────────────────────────────────────────────────────── */
 const EMAILJS_CONFIG = {
-  serviceId: "YOUR_SERVICE_ID",
-  templateId: "YOUR_TEMPLATE_ID",
-  publicKey: "YOUR_PUBLIC_KEY",
+  serviceId: "service_xf0usrp",
+  templateId: "template_4atccm9",
+  publicKey: "xaLAa1wrh8IxfhBk7",
 };
 
 /* ─── COLOUR TOKENS ──────────────────────────────────────────────────────── */
@@ -845,37 +845,37 @@ const SERVICES = [
     accent: "#8FB7FF",
   },
   {
-  icon: Layers,
-  title: "Greenfield Project Launch & Brownfield Transformation",
-  desc: "Translate new venture concepts and existing business operations into scalable, commercially viable, and operationally efficient growth platforms through structured execution and long-range strategic planning.",
+    icon: Layers,
+    title: "Greenfield Project Launch & Brownfield Transformation",
+    desc: "Translate new venture concepts and existing business operations into scalable, commercially viable, and operationally efficient growth platforms through structured execution and long-range strategic planning.",
 
-  points: [
-    "GREENFIELD PROJECT LAUNCH",
-    "New business and market opportunity development",
-    "Business feasibility, commercial validation, and investment assessment",
-    "Operating model design and business planning",
-    "Entity setup, infrastructure development, and operational launch",
-    "Early-stage go-to-market execution and channel activation",
-    "3–5 year strategic growth planning and scale-up roadmap",
-    "Portfolio expansion and geographic market entry strategy",
+    points: [
+      "GREENFIELD PROJECT LAUNCH",
+      "New business and market opportunity development",
+      "Business feasibility, commercial validation, and investment assessment",
+      "Operating model design and business planning",
+      "Entity setup, infrastructure development, and operational launch",
+      "Early-stage go-to-market execution and channel activation",
+      "3–5 year strategic growth planning and scale-up roadmap",
+      "Portfolio expansion and geographic market entry strategy",
 
-    "",
+      "",
 
-    "BROWNFIELD TRANSFORMATION",
-    "Existing business operational assessment and diagnostics",
-    "Business restructuring and performance turnaround initiatives",
-    "Supply chain, capability, and process optimization",
-    "Commercial transformation including pricing, margin, and portfolio enhancement",
-    "Distribution restructuring and channel efficiency improvement",
-    "Brand revitalization and market repositioning",
-    "Digitalization, governance, and compliance enhancement",
-    "Capacity expansion, productivity improvement, and cost optimization",
-    "Integration of new systems, processes, and performance management frameworks",
-    "Sustainable growth and transformation roadmap development for 3–5 years",
-  ],
+      "BROWNFIELD TRANSFORMATION",
+      "Existing business operational assessment and diagnostics",
+      "Business restructuring and performance turnaround initiatives",
+      "Supply chain, capability, and process optimization",
+      "Commercial transformation including pricing, margin, and portfolio enhancement",
+      "Distribution restructuring and channel efficiency improvement",
+      "Brand revitalization and market repositioning",
+      "Digitalization, governance, and compliance enhancement",
+      "Capacity expansion, productivity improvement, and cost optimization",
+      "Integration of new systems, processes, and performance management frameworks",
+      "Sustainable growth and transformation roadmap development for 3–5 years",
+    ],
 
-  accent: "#69D7B6",
-},
+    accent: "#69D7B6",
+  },
   {
     icon: Network,
     title: "JV, Distribution & Investment Partnering",
@@ -1141,7 +1141,7 @@ function About() {
               }}
             >
               Brownfield transformation initiatives have driven up to 45% growth in revenue and profitability through strategic modernization and operational optimization. Our trade and distribution expansion strategies have strengthened export volumes, channel reach, and international partnerships. By reducing costs, lead times, and process inefficiencies, businesses achieved greater operational efficiency and sustainable long-term value creation through improved CAGR, EBITDA growth, and enterprise performance.            </p>
-               <p
+            <p
               className="about-text"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
@@ -1152,8 +1152,8 @@ function About() {
                 maxWidth: 620,
               }}
             >
-Through disciplined execution, strategic transformation, and market-focused expansion, JAK Positivity enables businesses to unlock sustainable growth, stronger profitability, and long-term enterprise value.
-Because we believe in Jacking Up the Positivity.                      </p>
+              Through disciplined execution, strategic transformation, and market-focused expansion, JAK Positivity enables businesses to unlock sustainable growth, stronger profitability, and long-term enterprise value.
+              Because we believe in Jacking Up the Positivity.                      </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
               <MagneticButton onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}>
                 Partner With Us <ArrowRight size={15} />
@@ -1377,13 +1377,55 @@ function Contact() {
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
   const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  // Track specific validation errors across all fields
+  const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    // Dynamically clear the specific field error when typing or selecting
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: null });
+    }
+  };
+
+  const validateForm = () => {
+    const tempErrors = {};
+    
+    // Name Validation
+    if (!form.name.trim()) {
+      tempErrors.name = "Full name is required";
+    }
+
+    // Email Validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!form.email.trim()) {
+      tempErrors.email = "Email address is required";
+    } else if (!emailRegex.test(form.email)) {
+      tempErrors.email = "Please enter a valid email address";
+    }
+
+    // Service Dropdown Validation
+    if (!form.service) {
+      tempErrors.service = "Please select a service of interest";
+    }
+
+    // Message Textarea Validation
+    if (!form.message.trim()) {
+      tempErrors.message = "Please write your message or inquiry details";
+    }
+
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("loading");
     setErrorMsg("");
+    
+    // Stop form submission if UI local validation checks fail
+    if (!validateForm()) return;
+
+    setStatus("loading");
 
     try {
       if (!window.emailjs) {
@@ -1407,6 +1449,7 @@ function Contact() {
 
       setStatus("success");
       setForm({ name: "", email: "", service: "", message: "" });
+      setErrors({});
     } catch (err) {
       console.error("EmailJS error:", err);
       if (EMAILJS_CONFIG.serviceId === "YOUR_SERVICE_ID") {
@@ -1454,7 +1497,8 @@ function Contact() {
           <motion.div initial={{ opacity: 0, x: -30 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.1, type: "spring", stiffness: 100, damping: 18 }}>
             <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, fontWeight: 700, color: C.white, marginBottom: 32 }}>Let's talk global growth.</div>
             {[
-              { icon: Mail, label: "Email", value: "naveedkhhan@yahoo.com" },
+              { icon: Mail, label: "Primary Email", value: "info@jakpositivity.com" },
+              { icon: Mail, label: "Secondary Email", value: "naveedkhan@jakpositivity.com" },
               { icon: Phone, label: "Phone", value: "+971 50 413 1572" },
               { icon: MapPin, label: "HQ", value: "Dubai. Toronto. Islamabad" },
             ].map(({ icon: Icon, label, value }) => (
@@ -1509,10 +1553,18 @@ function Contact() {
                         value={form.name}
                         onChange={handleChange}
                         placeholder="Jane Smith"
-                        style={inputStyle}
-                        onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                        onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors.name ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)"
+                        }}
+                        onFocus={(e) => (e.target.style.borderColor = errors.name ? "rgb(239, 68, 68)" : C.goldLight)}
+                        onBlur={(e) => (e.target.style.borderColor = errors.name ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)")}
                       />
+                      {errors.name && (
+                        <div style={{ color: "#FCA5A5", fontSize: 12, fontFamily: "'DM Sans', sans-serif", marginTop: 6, paddingLeft: 2 }}>
+                          {errors.name}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <label style={labelStyle}>Email Address *</label>
@@ -1523,10 +1575,18 @@ function Contact() {
                         value={form.email}
                         onChange={handleChange}
                         placeholder="jane@company.com"
-                        style={inputStyle}
-                        onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                        onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+                        style={{
+                          ...inputStyle,
+                          borderColor: errors.email ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)"
+                        }}
+                        onFocus={(e) => (e.target.style.borderColor = errors.email ? "rgb(239, 68, 68)" : C.goldLight)}
+                        onBlur={(e) => (e.target.style.borderColor = errors.email ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)")}
                       />
+                      {errors.email && (
+                        <div style={{ color: "#FCA5A5", fontSize: 12, fontFamily: "'DM Sans', sans-serif", marginTop: 6, paddingLeft: 2 }}>
+                          {errors.email}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -1539,13 +1599,14 @@ function Contact() {
                       onChange={handleChange}
                       style={{
                         ...inputStyle,
+                        borderColor: errors.service ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)",
                         appearance: "none",
                         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "right 16px center",
                       }}
-                      onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+                      onFocus={(e) => (e.target.style.borderColor = errors.service ? "rgb(239, 68, 68)" : C.goldLight)}
+                      onBlur={(e) => (e.target.style.borderColor = errors.service ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)")}
                     >
                       <option value="" disabled style={{ background: C.obsidian }}>Select a service…</option>
                       <option value="International Business Expansion" style={{ background: C.obsidian }}>International Business Expansion</option>
@@ -1561,6 +1622,11 @@ function Contact() {
                       <option value="M&A, Joint Venture Planning and Execution" style={{ background: C.obsidian }}>M&A, Joint Venture Planning and Execution</option>
                       <option value="General Inquiry" style={{ background: C.obsidian }}>General Inquiry</option>
                     </select>
+                    {errors.service && (
+                      <div style={{ color: "#FCA5A5", fontSize: 12, fontFamily: "'DM Sans', sans-serif", marginTop: 6, paddingLeft: 2 }}>
+                        {errors.service}
+                      </div>
+                    )}
                   </div>
 
                   <div style={{ marginBottom: 28 }}>
@@ -1572,10 +1638,21 @@ function Contact() {
                       value={form.message}
                       onChange={handleChange}
                       placeholder="Tell us about your business, target markets, and goals…"
-                      style={{ ...inputStyle, resize: "vertical", minHeight: 130, lineHeight: 1.65 }}
-                      onFocus={(e) => (e.target.style.borderColor = C.goldLight)}
-                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.12)")}
+                      style={{ 
+                        ...inputStyle, 
+                        borderColor: errors.message ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)",
+                        resize: "vertical", 
+                        minHeight: 130, 
+                        lineHeight: 1.65 
+                      }}
+                      onFocus={(e) => (e.target.style.borderColor = errors.message ? "rgb(239, 68, 68)" : C.goldLight)}
+                      onBlur={(e) => (e.target.style.borderColor = errors.message ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)")}
                     />
+                    {errors.message && (
+                      <div style={{ color: "#FCA5A5", fontSize: 12, fontFamily: "'DM Sans', sans-serif", marginTop: 6, paddingLeft: 2 }}>
+                        {errors.message}
+                      </div>
+                    )}
                   </div>
 
                   {status === "error" && (
