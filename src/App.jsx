@@ -810,6 +810,7 @@ function Hero() {
 }
 
 /* ─── SERVICES ────────────────────────────────────────────────────────────── */
+/* ─── SERVICES ────────────────────────────────────────────────────────────── */
 const SERVICES = [
   {
     icon: Globe,
@@ -848,7 +849,6 @@ const SERVICES = [
     icon: Layers,
     title: "Greenfield Project Launch & Brownfield Transformation",
     desc: "Translate new venture concepts and existing business operations into scalable, commercially viable, and operationally efficient growth platforms through structured execution and long-range strategic planning.",
-
     points: [
       "GREENFIELD PROJECT LAUNCH",
       "New business and market opportunity development",
@@ -858,9 +858,7 @@ const SERVICES = [
       "Early-stage go-to-market execution and channel activation",
       "3–5 year strategic growth planning and scale-up roadmap",
       "Portfolio expansion and geographic market entry strategy",
-
       "",
-
       "BROWNFIELD TRANSFORMATION",
       "Existing business operational assessment and diagnostics",
       "Business restructuring and performance turnaround initiatives",
@@ -873,7 +871,6 @@ const SERVICES = [
       "Integration of new systems, processes, and performance management frameworks",
       "Sustainable growth and transformation roadmap development for 3–5 years",
     ],
-
     accent: "#69D7B6",
   },
   {
@@ -891,6 +888,20 @@ const SERVICES = [
       "Distribution ecosystem development"
     ],
     accent: "#C79BFF",
+  },
+  {
+    icon: Users, // Feel free to swap this with standard Lucide icons like 'Briefcase', 'Handshake', or 'MapPin'
+    title: "In-Country Distributor & Principal Representation",
+    desc: "Based in Dubai, we provide on-ground representation for international distributors and their principals across the GCC, Middle East, South Asia, and Far East, enabling consistent, high-quality customer engagement without frequent travel.",
+    points: [
+      "Representing distributors and principals in local customer meetings and engagements across the GCC, Middle East, South Asia, and Far East",
+      "Facilitating commercial discussions, follow-ups, and coordination with end customers on their behalf",
+      "Maintaining continuous customer relationship engagement for international teams based outside the region",
+      "Providing structured market intelligence, customer feedback, and opportunity validation from on-ground interactions",
+      "Supporting deal progression through timely local coordination and sustained engagement",
+      "Reducing international travel requirements while strengthening regional presence and responsiveness"
+    ],
+    accent: "#FF9F84", // A new complementary accent color block for this service
   },
 ];
 
