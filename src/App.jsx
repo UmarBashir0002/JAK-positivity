@@ -168,9 +168,18 @@ function Nav() {
   }, []);
 
   const links = ["Home", "About", "Services", "Leadership Team", "Results", "Contact"];
-  const scroll = (id) => {
+  const linkIdMap = {
+    "Home": "home",
+    "About": "about",
+    "Services": "services",
+    "Leadership Team": "our team",
+    "Results": "results",
+    "Contact": "contact",
+  };
+  const scroll = (label) => {
     setOpen(false);
-    const element = document.getElementById(id.toLowerCase());
+    const id = linkIdMap[label] || label.toLowerCase();
+    const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
@@ -259,13 +268,15 @@ function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
             style={{
               background: "rgba(5,10,20,0.98)",
               borderTop: `1px solid ${C.border}`,
               padding: "16px 5vw 24px",
+              overflow: "visible",
             }}
           >
             {links.map((l) => (
@@ -286,14 +297,39 @@ function Nav() {
                   cursor: "pointer",
                   touchAction: "manipulation",
                   WebkitTapHighlightColor: "transparent",
+                  userSelect: "none",
+                  minHeight: 48,
                 }}
               >
                 {l}
               </button>
             ))}
-            <MagneticButton onClick={() => scroll("contact")} variant="primary" style={{ marginTop: 20, width: "100%", justifyContent: "center" }}>
-              Book Alpha Meeting
-            </MagneticButton>
+            <div style={{ marginTop: 20 }}>
+              <button
+                onClick={() => scroll("Contact")}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  textAlign: "center",
+                  background: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`,
+                  border: "none",
+                  borderRadius: 14,
+                  padding: "15px 30px",
+                  color: C.obsidian,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 15,
+                  cursor: "pointer",
+                  touchAction: "manipulation",
+                  WebkitTapHighlightColor: "transparent",
+                  userSelect: "none",
+                  minHeight: 48,
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Book Alpha Meeting
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1392,9 +1428,9 @@ function Services() {
 
 /* ─── RESULTS / TESTIMONIALS ──────────────────────────────────────────────── */
 const TESTIMONIALS = [
-  { name: "Amara Nwosu", role: "CEO, NovaTech Africa", text: "JAK Positivity executed our tri-regional expansion script flawlessly within 11 months. Their network assets are unprecedented.", signature: "NW" },
-  { name: "David Chen", role: "MD, AsiaLink Corp", text: "Exceptional quantitative risk insulation frameworks. They corrected critical legal positioning vectors ahead of market entry.", signature: "DC" },
-  { name: "Sophie Laurent", role: "Founder, Maison Lumière", text: "They operate like an ultra-luxury tactical unit rather than a consulting vendor. Our Middle East alpha capture loop has yielded unprecedented scale.", signature: "SL" }
+  { name: "Amara Nwosu", role: "CEO, NovaTech Africa", text: "JAK Positivity executed our tri-regional expansion script flawlessly within 11 months. Their network assets are unprecedented.", signature: "NW", stars: 5 },
+  { name: "David Chen", role: "MD, AsiaLink Corp", text: "Exceptional quantitative risk insulation frameworks. They corrected critical legal positioning vectors ahead of market entry.", signature: "DC", stars: 5 },
+  { name: "Sophie Laurent", role: "Founder, Maison Lumière", text: "They operate like an ultra-luxury tactical unit rather than a consulting vendor. Our Middle East alpha capture loop has yielded unprecedented scale.", signature: "SL", stars: 5 }
 ];
 
 function Results() {
@@ -1813,4 +1849,3 @@ function App() {
   );
 }
 export default App;
-
