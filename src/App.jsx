@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import {
@@ -166,7 +167,7 @@ function Nav() {
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  const links = ["Home", "About", "Services", "Results", "Contact"];
+  const links = ["Home", "About", "Services", "Leadership Team", "Results", "Contact"];
   const scroll = (id) => {
     setOpen(false);
     const element = document.getElementById(id.toLowerCase());
@@ -436,7 +437,6 @@ function Hero() {
                 </span>
               </div>
             </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
@@ -500,6 +500,8 @@ function Hero() {
                 <span style={{ color: "#34D399", fontStyle: "italic" }}>
                   Greenfield Launch
                 </span>
+                {/* ONE LINE ADDED BELOW */}
+                <span style={{ color: "rgba(255,255,255,0.4)" }}> • </span><span style={{ color: "#E2E8F0", fontStyle: "italic" }}>Principal & Stakeholder Liaison</span>
               </span>
             </motion.h1>
 
@@ -805,195 +807,6 @@ function Hero() {
           }
         }
       `}</style>
-    </section>
-  );
-}
-
-/* ─── SERVICES ────────────────────────────────────────────────────────────── */
-/* ─── SERVICES ────────────────────────────────────────────────────────────── */
-const SERVICES = [
-  {
-    icon: Globe,
-    title: "International Business Development & Market Expansion",
-    desc: "Navigate the complexities of global scaling confidently. We map targets, uncover market entry white spaces, and isolate execution risks.",
-    points: [
-      "Market entry strategy and expansion planning",
-      "Market feasibility and opportunity assessment",
-      "Competitive positioning and market intelligence",
-      "Product portfolio optimisation for target markets",
-      "Identification and activation of market white spaces",
-      "Go-to-market strategy and execution support",
-      "Regulatory and compliance mapping",
-      "Distributor and channel partner selection",
-      "Global exhibitions and trade show participation",
-      "Channel specific needs",
-      "Multi-channel strategies including mainstream and ethnic"
-    ],
-    accent: C.goldLight,
-  },
-  {
-    icon: TrendingUp,
-    title: "Business Turnaround, P&L Optimization & Reorganisation",
-    desc: "Strengthen and manage the core operational engines. We institute absolute financial discipline, performance diagnostics, and margin recovery paths.",
-    points: [
-      "Business diagnostics and performance assessment",
-      "Brownfield restructuring and operational cleanup",
-      "P&L optimisation and financial discipline setup",
-      "Cost and margin improvement strategies",
-      "KPI and OKR framework implementation",
-      "Business reorganisation and scaling readiness"
-    ],
-    accent: "#8FB7FF",
-  },
-  {
-    icon: Layers,
-    title: "Greenfield Project Launch & Brownfield Transformation",
-    desc: "Translate new venture concepts and existing business operations into scalable, commercially viable, and operationally efficient growth platforms through structured execution and long-range strategic planning.",
-    points: [
-      "GREENFIELD PROJECT LAUNCH",
-      "New business and market opportunity development",
-      "Business feasibility, commercial validation, and investment assessment",
-      "Operating model design and business planning",
-      "Entity setup, infrastructure development, and operational launch",
-      "Early-stage go-to-market execution and channel activation",
-      "3–5 year strategic growth planning and scale-up roadmap",
-      "Portfolio expansion and geographic market entry strategy",
-      "",
-      "BROWNFIELD TRANSFORMATION",
-      "Existing business operational assessment and diagnostics",
-      "Business restructuring and performance turnaround initiatives",
-      "Supply chain, capability, and process optimization",
-      "Commercial transformation including pricing, margin, and portfolio enhancement",
-      "Distribution restructuring and channel efficiency improvement",
-      "Brand revitalization and market repositioning",
-      "Digitalization, governance, and compliance enhancement",
-      "Capacity expansion, productivity improvement, and cost optimization",
-      "Integration of new systems, processes, and performance management frameworks",
-      "Sustainable growth and transformation roadmap development for 3–5 years",
-    ],
-    accent: "#69D7B6",
-  },
-  {
-    icon: Network,
-    title: "JV, Distribution & Investment Partnering",
-    desc: "Secure market-making institutional alliances, distribution channels, investor matchmaking, and robust cross-border capital pipelines.",
-    points: [
-      "Joint venture structuring and strategic alliances",
-      "Distributor and channel partner development",
-      "Partner matchmaking and negotiation support",
-      "Investor sourcing and capital facilitation",
-      "Pitch deck and investment positioning",
-      "Due diligence and deal support",
-      "Roadshow and investor engagement planning",
-      "Distribution ecosystem development"
-    ],
-    accent: "#C79BFF",
-  },
-  {
-    icon: Users, // Feel free to swap this with standard Lucide icons like 'Briefcase', 'Handshake', or 'MapPin'
-    title: "In-Country Distributor & Principal Representation",
-    desc: "Based in Dubai, we provide on-ground representation for international distributors and their principals across the GCC, Middle East, South Asia, and Far East, enabling consistent, high-quality customer engagement without frequent travel.",
-    points: [
-      "Representing distributors and principals in local customer meetings and engagements across the GCC, Middle East, South Asia, and Far East",
-      "Facilitating commercial discussions, follow-ups, and coordination with end customers on their behalf",
-      "Maintaining continuous customer relationship engagement for international teams based outside the region",
-      "Providing structured market intelligence, customer feedback, and opportunity validation from on-ground interactions",
-      "Supporting deal progression through timely local coordination and sustained engagement",
-      "Reducing international travel requirements while strengthening regional presence and responsiveness"
-    ],
-    accent: "#FF9F84", // A new complementary accent color block for this service
-  },
-];
-
-function ServiceCard({ svc, index }) {
-  const [ref, inView] = useReveal(0.1);
-  const [hovered, setHovered] = useState(false);
-  const Icon = svc.icon;
-  const isMobile = useIsMobile();
-
-  const items = svc.points || svc.features || [];
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ type: "spring", stiffness: 110, damping: 18, delay: (index % 3) * 0.10 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: hovered ? "rgba(5,10,20,0.96)" : "rgba(255,255,255,0.78)",
-        border: `1px solid ${hovered ? svc.accent : "rgba(5,10,20,0.06)"}`,
-        borderRadius: 22,
-        padding: 36,
-        transition: "transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease",
-        transform: hovered && !isMobile ? "translateY(-8px)" : "none",
-        boxShadow: hovered
-          ? `0 24px 60px rgba(5,10,20,0.22), 0 0 0 1px ${svc.accent}22, inset 0 0 40px ${svc.accent}10`
-          : "0 4px 18px rgba(5,10,20,0.05)",
-        cursor: "default",
-        position: "relative",
-        overflow: "hidden",
-        willChange: "transform",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          inset: "auto -30px -40px auto",
-          width: 180,
-          height: 180,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${svc.accent}20 0%, transparent 70%)`,
-          opacity: hovered ? 1 : 0,
-          transition: "opacity 0.35s ease",
-          pointerEvents: "none",
-        }}
-      />
-
-      <div style={{ width: 54, height: 54, borderRadius: 16, background: hovered ? `${svc.accent}18` : `${svc.accent}10`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22, transition: "background 0.3s" }}>
-        <Icon size={24} color={svc.accent} strokeWidth={1.8} />
-      </div>
-
-      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: hovered ? C.white : C.obsidian, margin: "0 0 12px", transition: "color 0.3s" }}>
-        {svc.title}
-      </h3>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: hovered ? "rgba(255,255,255,0.72)" : C.muted, lineHeight: 1.75, margin: "0 0 24px", transition: "color 0.3s" }}>
-        {svc.desc}
-      </p>
-
-      <div style={{ borderTop: `1px solid ${hovered ? `${svc.accent}33` : "rgba(5,10,20,0.06)"}`, paddingTop: 18 }}>
-        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: hovered ? svc.accent : C.muted, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>
-          Operational Matrices
-        </div>
-        <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-          {items.map((f) => (
-            <li key={f} style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: hovered ? "rgba(255,255,255,0.76)" : C.muted, transition: "color 0.3s" }}>
-              <CheckCircle size={14} color={svc.accent} strokeWidth={2} style={{ flexShrink: 0 }} />
-              {f}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </motion.div>
-  );
-}
-
-function Services() {
-  const [ref, inView] = useReveal(0.1);
-  return (
-    <section id="services" style={{ background: C.bgCard, padding: "140px 5vw", position: "relative" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: 80 }}>
-          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 18, padding: "6px 20px", background: "rgba(56, 189, 248, 0.08)", border: `1px solid rgba(56, 189, 248, 0.15)`, borderRadius: 100 }}>System Frameworks</div>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(34px, 4.2vw, 56px)", fontWeight: 700, color: C.white, margin: 0 }}>Core Service Pillars</h2>
-        </motion.div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))", gap: 32 }} className="services-grid-layout">
-          {SERVICES.map((s, i) => <ServiceCard key={s.title} svc={s} index={i} />)}
-        </div>
-      </div>
-      <style>{`@media (max-width: 600px) { .services-grid-layout { grid-template-columns: 1fr !important; } }`}</style>
     </section>
   );
 }
@@ -1330,6 +1143,253 @@ function About() {
     </section>
   );
 }
+
+/* ─── OUR TEAM ───────────────────────────────────────────────────────────── */
+function Team() {
+  const [ref, inView] = useReveal(0.1);
+  return (
+    <section id="our team" style={{ background: C.charcoal, padding: "110px 5vw", position: "relative" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }} style={{ textAlign: "center", marginBottom: 64 }}>
+          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.goldLight, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 16, padding: "6px 18px", background: `${C.gold}15`, borderRadius: 100 }}>Leadership</div>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 700, color: C.white, margin: "0 0 16px" }}>Our Team</h2>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.55)", maxWidth: 600, margin: "0 auto" }}>World-class academic alignment merged with international corporate governance.</p>
+        </motion.div>
+
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, type: "spring", stiffness: 90, damping: 18 }}
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: `1px solid ${C.border}`,
+              borderRadius: 24,
+              padding: "48px 40px",
+              maxWidth: 600,
+              width: "100%",
+              textAlign: "center",
+              backdropFilter: "blur(20px)",
+              WebkitBackdropFilter: "blur(20px)",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.3)"
+            }}
+          >
+            <div style={{
+              width: 84, height: 84, borderRadius: "50%",
+              background: `linear-gradient(135deg, ${C.obsidian}, ${C.slateLight})`,
+              border: `1px solid ${C.goldLight}`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 24, color: C.goldLight,
+              margin: "0 auto 24px",
+              boxShadow: "0 10px 24px rgba(184,134,11,0.2)"
+            }}>
+              NK
+            </div>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 26, fontWeight: 700, color: C.white, margin: "0 0 6px" }}>Naveed A. Khan</h3>
+            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: C.goldLight, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 24 }}>
+              Principal & Global Advisor
+            </div>
+            <div style={{ height: 1, width: 50, background: "rgba(255,215,0,0.25)", margin: "0 auto 24px" }} />
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 16, color: "rgba(255,255,255,0.85)", lineHeight: 1.7, margin: 0, letterSpacing: "0.01em" }}>
+              School of Hospitality Management,<br />
+              <span style={{ fontWeight: 600, color: C.white }}>Florida International University</span><br />
+              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 14 }}>Miami, Florida, USA</span>
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── SERVICES ────────────────────────────────────────────────────────────── */
+const SERVICES = [
+  {
+    icon: Globe,
+    title: "International Business Development & Market Expansion",
+    desc: "Navigate the complexities of global scaling confidently. We map targets, uncover market entry white spaces, and isolate execution risks.",
+    points: [
+      "Market entry strategy and expansion planning",
+      "Market feasibility and opportunity assessment",
+      "Competitive positioning and market intelligence",
+      "Product portfolio optimisation for target markets",
+      "Identification and activation of market white spaces",
+      "Go-to-market strategy and execution support",
+      "Regulatory and compliance mapping",
+      "Distributor and channel partner selection",
+      "Global exhibitions and trade show participation",
+      "Channel specific needs",
+      "Multi-channel strategies including mainstream and ethnic"
+    ],
+    accent: C.goldLight,
+  },
+  {
+    icon: TrendingUp,
+    title: "Business Turnaround, P&L Optimization & Reorganisation",
+    desc: "Strengthen and manage the core operational engines. We institute absolute financial discipline, performance diagnostics, and margin recovery paths.",
+    points: [
+      "Business diagnostics and performance assessment",
+      "Brownfield restructuring and operational cleanup",
+      "P&L optimisation and financial discipline setup",
+      "Cost and margin improvement strategies",
+      "KPI and OKR framework implementation",
+      "Business reorganisation and scaling readiness"
+    ],
+    accent: "#8FB7FF",
+  },
+  {
+    icon: Layers,
+    title: "Greenfield Project Launch & Brownfield Transformation",
+    desc: "Translate new venture concepts and existing business operations into scalable, commercially viable, and operationally efficient growth platforms through structured execution and long-range strategic planning.",
+    points: [
+      "GREENFIELD PROJECT LAUNCH",
+      "New business and market opportunity development",
+      "Business feasibility, commercial validation, and investment assessment",
+      "Operating model design and business planning",
+      "Entity setup, infrastructure development, and operational launch",
+      "Early-stage go-to-market execution and channel activation",
+      "3–5 year strategic growth planning and scale-up roadmap",
+      "Portfolio expansion and geographic market entry strategy",
+      "",
+      "BROWNFIELD TRANSFORMATION",
+      "Existing business operational assessment and diagnostics",
+      "Business restructuring and performance turnaround initiatives",
+      "Supply chain, capability, and process optimization",
+      "Commercial transformation including pricing, margin, and portfolio enhancement",
+      "Distribution restructuring and channel efficiency improvement",
+      "Brand revitalization and market repositioning",
+      "Digitalization, governance, and compliance enhancement",
+      "Capacity expansion, productivity improvement, and cost optimization",
+      "Integration of new systems, processes, and performance management frameworks",
+      "Sustainable growth and transformation roadmap development for 3–5 years",
+    ],
+    accent: "#69D7B6",
+  },
+  {
+    icon: Network,
+    title: "JV, Distribution & Investment Partnering",
+    desc: "Secure market-making institutional alliances, distribution channels, investor matchmaking, and robust cross-border capital pipelines.",
+    points: [
+      "Joint venture structuring and strategic alliances",
+      "Distributor and channel partner development",
+      "Partner matchmaking and negotiation support",
+      "Investor sourcing and capital facilitation",
+      "Pitch deck and investment positioning",
+      "Due diligence and deal support",
+      "Roadshow and investor engagement planning",
+      "Distribution ecosystem development"
+    ],
+    accent: "#C79BFF",
+  },
+  {
+    icon: Users,
+    title: "In-Country Distributor & Principal Representation",
+    desc: "Based in Dubai, we provide on-ground representation for international distributors and their principals across the GCC, Middle East, South Asia, and Far East, enabling consistent, high-quality customer engagement without frequent travel.",
+    points: [
+      "Representing distributors and principals in local customer meetings and engagements across the GCC, Middle East, South Asia, and Far East",
+      "Facilitating commercial discussions, follow-ups, and coordination with end customers on their behalf",
+      "Maintaining continuous customer relationship engagement for international teams based outside the region",
+      "Providing structured market intelligence, customer feedback, and opportunity validation from on-ground interactions",
+      "Supporting deal progression through timely local coordination and sustained engagement",
+      "Reducing international travel requirements while strengthening regional presence and responsiveness"
+    ],
+    accent: "#FF9F84",
+  },
+];
+
+function ServiceCard({ svc, index }) {
+  const [ref, inView] = useReveal(0.1);
+  const [hovered, setHovered] = useState(false);
+  const Icon = svc.icon;
+  const isMobile = useIsMobile();
+
+  const items = svc.points || svc.features || [];
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ type: "spring", stiffness: 110, damping: 18, delay: (index % 3) * 0.10 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered ? "rgba(5,10,20,0.96)" : "rgba(255,255,255,0.78)",
+        border: `1px solid ${hovered ? svc.accent : "rgba(5,10,20,0.06)"}`,
+        borderRadius: 22,
+        padding: 36,
+        transition: "transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease",
+        transform: hovered && !isMobile ? "translateY(-8px)" : "none",
+        boxShadow: hovered
+          ? `0 24px 60px rgba(5,10,20,0.22), 0 0 0 1px ${svc.accent}22, inset 0 0 40px ${svc.accent}10`
+          : "0 4px 18px rgba(5,10,20,0.05)",
+        cursor: "default",
+        position: "relative",
+        overflow: "hidden",
+        willChange: "transform",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: "auto -30px -40px auto",
+          width: 180,
+          height: 180,
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${svc.accent}20 0%, transparent 70%)`,
+          opacity: hovered ? 1 : 0,
+          transition: "opacity 0.35s ease",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ width: 54, height: 54, borderRadius: 16, background: hovered ? `${svc.accent}18` : `${svc.accent}10`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 22, transition: "background 0.3s" }}>
+        <Icon size={24} color={svc.accent} strokeWidth={1.8} />
+      </div>
+
+      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700, color: hovered ? C.white : C.obsidian, margin: "0 0 12px", transition: "color 0.3s" }}>
+        {svc.title}
+      </h3>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: hovered ? "rgba(255,255,255,0.72)" : C.muted, lineHeight: 1.75, margin: "0 0 24px", transition: "color 0.3s" }}>
+        {svc.desc}
+      </p>
+
+      <div style={{ borderTop: `1px solid ${hovered ? `${svc.accent}33` : "rgba(5,10,20,0.06)"}`, paddingTop: 18 }}>
+        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: hovered ? svc.accent : C.muted, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14 }}>
+          Operational Matrices
+        </div>
+        <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+          {items.map((f) => (
+            <li key={f} style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: hovered ? "rgba(255,255,255,0.76)" : C.muted, transition: "color 0.3s" }}>
+              <CheckCircle size={14} color={svc.accent} strokeWidth={2} style={{ flexShrink: 0 }} />
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+}
+
+function Services() {
+  const [ref, inView] = useReveal(0.1);
+  return (
+    <section id="services" style={{ background: C.bgCard, padding: "140px 5vw", position: "relative" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ textAlign: "center", marginBottom: 80 }}>
+          <div style={{ display: "inline-block", fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: C.skyGlow, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 18, padding: "6px 20px", background: "rgba(56, 189, 248, 0.08)", border: `1px solid rgba(56, 189, 248, 0.15)`, borderRadius: 100 }}>System Frameworks</div>
+          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(34px, 4.2vw, 56px)", fontWeight: 700, color: C.white, margin: 0 }}>Core Service Pillars</h2>
+        </motion.div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))", gap: 32 }} className="services-grid-layout">
+          {SERVICES.map((s, i) => <ServiceCard key={s.title} svc={s} index={i} />)}
+        </div>
+      </div>
+      <style>{`@media (max-width: 600px) { .services-grid-layout { grid-template-columns: 1fr !important; } }`}</style>
+    </section>
+  );
+}
+
 /* ─── RESULTS / TESTIMONIALS ──────────────────────────────────────────────── */
 const TESTIMONIALS = [
   { name: "Amara Nwosu", role: "CEO, NovaTech Africa", text: "JAK Positivity executed our tri-regional expansion script flawlessly within 11 months. Their network assets are unprecedented.", signature: "NW" },
@@ -1388,12 +1448,10 @@ function Contact() {
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
   const [status, setStatus] = useState("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  // Track specific validation errors across all fields
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Dynamically clear the specific field error when typing or selecting
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: null });
     }
@@ -1401,30 +1459,15 @@ function Contact() {
 
   const validateForm = () => {
     const tempErrors = {};
-    
-    // Name Validation
-    if (!form.name.trim()) {
-      tempErrors.name = "Full name is required";
-    }
-
-    // Email Validation
+    if (!form.name.trim()) tempErrors.name = "Full name is required";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!form.email.trim()) {
       tempErrors.email = "Email address is required";
     } else if (!emailRegex.test(form.email)) {
       tempErrors.email = "Please enter a valid email address";
     }
-
-    // Service Dropdown Validation
-    if (!form.service) {
-      tempErrors.service = "Please select a service of interest";
-    }
-
-    // Message Textarea Validation
-    if (!form.message.trim()) {
-      tempErrors.message = "Please write your message or inquiry details";
-    }
-
+    if (!form.service) tempErrors.service = "Please select a service of interest";
+    if (!form.message.trim()) tempErrors.message = "Please write your message or inquiry details";
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -1432,10 +1475,7 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
-    
-    // Stop form submission if UI local validation checks fail
     if (!validateForm()) return;
-
     setStatus("loading");
 
     try {
@@ -1649,12 +1689,12 @@ function Contact() {
                       value={form.message}
                       onChange={handleChange}
                       placeholder="Tell us about your business, target markets, and goals…"
-                      style={{ 
-                        ...inputStyle, 
+                      style={{
+                        ...inputStyle,
                         borderColor: errors.message ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)",
-                        resize: "vertical", 
-                        minHeight: 130, 
-                        lineHeight: 1.65 
+                        resize: "vertical",
+                        minHeight: 130,
+                        lineHeight: 1.65
                       }}
                       onFocus={(e) => (e.target.style.borderColor = errors.message ? "rgb(239, 68, 68)" : C.goldLight)}
                       onBlur={(e) => (e.target.style.borderColor = errors.message ? "rgba(239, 68, 68, 0.5)" : "rgba(255,255,255,0.12)")}
@@ -1765,6 +1805,7 @@ function App() {
       <Hero />
       <About />
       <Services />
+      <Team />
       <Results />
       <Contact />
       <Footer />
@@ -1772,3 +1813,4 @@ function App() {
   );
 }
 export default App;
+
